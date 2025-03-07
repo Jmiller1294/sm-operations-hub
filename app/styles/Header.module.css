@@ -1,0 +1,7 @@
+.container {
+  display: flex;
+  height: 10vh;
+  width: 100%;
+  background-color: #ffffff;
+  align-items: center;
+}
