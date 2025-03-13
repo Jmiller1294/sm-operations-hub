@@ -1,0 +1,312 @@
+.container{
+  width: 100%;
+  height: 90vh;
+  overflow-y: scroll;
+  z-index: 1;
+}
+
+.header{
+  position: fixed;
+  top: 68px; /* Position the navbar at the top of the page */
+  width: 88vw; /* Full width */
+  height: fit-content;
+  z-index: 6;
+  background: #ffffff;
+  border-top: 1px solid #e7e7e7;
+  border-left: 1px solid #e7e7e7;
+}
+
+.row{
+  display: flex; 
+  flex-direction: row; 
+  height: fit-content; 
+  width: 100%;
+  box-sizing: border-box;
+  align-items: center;
+}
+
+.toggleContainer {
+  display: inline-block;
+  position: relative;
+  padding: 16px;
+}
+
+.toggleInput {
+  display: none; /* Hide the checkbox */
+}
+
+.toggleLabel {
+  display: flex;
+  position: relative;
+  align-items: center;
+  justify-content: space-around;
+  width: 80px;
+  height: 36px;
+  background: #efefef;
+  border-radius: 25px;
+  border: 3px solid #e7e7e7; 
+  cursor: pointer;
+  transition: background 0.3s;
+  box-sizing: border-box;
+}
+
+.toggleLabel::before {
+  content: '';
+  position: absolute;
+  width: 50%;
+  height: 100%;
+  left: 0%;
+  border-radius: 25px;
+  background: white;
+  transition: all 0.3s;
+}
+
+.toggleLabel span{
+  text-align: center;
+  z-index: 1;
+}
+
+/* Checked State */
+.toggleInput:checked + .toggleLabel::before {
+  left: 50%;
+}
+
+.toggleInput:checked + .toggleLabel span:first-child {
+  transition: color 0.3s;
+}
+
+.toggleInput:checked + .toggleLabel span:last-child {
+  transition: color 0.3s;
+}
+
+.IconContainer{
+  display: flex;
+  flex-direction: row;
+  height: fit-content;
+  width: 8%;
+  box-sizing: border-box;
+  margin-top: 5px;
+  align-items: center;
+  margin-right: 10px;
+}
+
+.todayButton{
+  display: flex;
+  flex-direction: row;
+  height: 34px;
+  width: 16%;
+  justify-content: center;
+  align-items: center;
+  border-radius: 25px;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.appointmentButton{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  height: 34px;
+  width: 28%;
+  border-radius: 25px;
+  font-size: 0.8rem;
+  font-weight: 550;
+  border: none;
+  box-sizing: border-box;
+}
+
+.buttonsContainer{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+  margin-left: auto;
+  height: 40px;
+  width: 47%;
+  font-size: 0.9rem;
+  font-weight: 550;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+.verticalLine{
+  height: 26px;
+  border-left: 1.2px solid #c4c4c4;;
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
+.dateText{
+  font-size: 1.4rem;
+  font-weight: bold;
+}
+
+.toggleCon {
+  display: flex;
+  align-items: center;
+  position: relative;
+  width: 210px;
+  height: 34px;
+  background: #efefef;
+  border-radius: 25px;
+  padding: 5px;
+  box-sizing: border-box;
+  margin-top: 2px;
+}
+
+.toggleIn {
+  display: none;
+}
+
+.toggleLab::before{
+  content: "";
+}
+
+.toggleLab {
+  flex: 1;
+  text-align: center;
+  cursor: pointer;
+  font-size: 12px;
+  position: relative;
+  z-index: 2;
+}
+
+.toggleCon:before label:first-of-type span{
+  color: #ffffff !important;
+}
+
+.toggleSlider {
+  position: absolute;
+  top: 3px;
+  left: 4px;
+  width: 70px;
+  height: 28px;
+  background: rgb(52, 72, 99);
+  border-radius: 25px;
+  transition: all 0.3s ease-in-out;
+  z-index: 1;
+}
+
+.disabled{
+  background: grey;
+}
+
+/* Move the slider based on the position */
+.toggleSlider[data-position="center"] {
+  left: 70px;
+}
+
+.toggleSlider[data-position="right"] {
+  left: 136px;
+}
+
+.calendarArrows{
+  padding: 10px;
+  background: #ffffff;
+  border-radius: 50%;
+}
+
+.calendarArrows:hover{
+  padding: 10px;
+  background: #efefef;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.todayText{
+  font-size: 20px;
+  font-weight: normal;
+  margin-left: 4px;
+}
+
+.side-modal {
+  position: fixed;
+  top: 0;
+  right: -300px; /* Initially hidden off-screen */
+  width: 300px;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+  transition: right 0.3s ease-in-out; /* Smooth transition for opening/closing */
+  z-index: 1000; /* Ensure it's on top of other content */
+}
+
+.side-modal.open {
+  right: 0; /* Slide in when open */
+}
+
+.modal-content {
+  background-color: white;
+  height: 100%;
+  padding: 20px;
+}
+
+.close-button {
+  font-size: 16px;
+  cursor: pointer;
+  border: none;
+  background: none;
+  justify-self: flex-start;
+}
+
+.appointmentInfoCon{
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100vh;
+  box-sizing: border-box;
+  overflow-y: scroll;
+}
+
+.appointmentButtonCon{
+  display: flex;
+  width: 100%;
+  height: auto;
+  box-sizing: border-box;
+  padding: 10px;
+  border-bottom: 1px solid rgb(225, 225, 225);
+}
+
+.appointmentbtns{
+  height: 32px;
+  font-size: 16px;
+  font-weight: 550;
+  border: none;
+  border-radius: 4px;
+  padding-right: 14px;
+  padding-left: 14px;
+}
+
+.appointmentbtns:hover{
+ opacity: 0.6;
+ cursor: pointer;
+}
+
+.buttonContainer{
+  display: flex;
+  width: 45%;
+  margin: auto;
+  justify-content: space-evenly;
+}
+
+.textContainer{
+  padding: 30px;
+  overflow-y: scroll;
+}
+
+.appointment-info-text{
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 32px;
+  margin: 0;
+}
+
+.red{
+  color: red;
+}
+
+.textCon{
+  border-bottom: 1px solid rgb(225, 225, 225);
+  display: flex; 
+  flex-direction: row;
+}

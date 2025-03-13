@@ -1,0 +1,225 @@
+.calendarContainer {
+  display: flex;
+  width: 100%;
+  height: 1500px;
+  margin-top: 120px;
+  position: relative;
+  padding-top: 1px;
+}
+
+.timeColumn {
+  width: 8.1%;
+  height: fit-content;
+  background: #f5f5f5;
+  text-align: center;
+  font-size: 12px;
+  margin-top: 52px;
+}
+
+.timeSlot {
+  height: 60px;
+}
+
+.appointment {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  left: 10px;
+  right: 10px;
+  background: #73C1ED;
+  color: #313131;
+  padding: 10px;
+  box-sizing: border-box;
+  border-radius: 4px;
+  font-size: 12px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+}
+
+.col{
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 32.8%;
+}
+
+.small-col{
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 14%;
+}
+
+.row{
+  display: flex;
+  flex-direction:row;
+  height: 59px;
+  border-top: 1px solid #c4c4c4;
+  border-left: 1px solid #ccc;
+}
+
+.appointmentName{
+  font-weight: bold;
+}
+
+.appointmentInfoCon{
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: fit-content;
+  flex-direction: row;
+}
+
+.appointmentType{
+  margin-right: auto;
+}
+
+.DaysCon{
+  display: flex;
+  flex-direction: row;
+  height: fit-content;
+  width: 82%;
+}
+
+.DayCon{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  height: 52px;
+  width: 14.4%;
+  border-right: 1.2px solid #ddd;
+  box-sizing: border-box;
+  font-size: 14px;
+  padding: 5px;
+}
+
+.employeeInfoCon{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  height: fit-content;
+  width: 100%;
+  position: fixed;
+  top: 136px; /* Position the navbar at the top of the page */
+  height: fit-content;
+  z-index: 6;
+  background: #ffffff;
+  border-top: 1px solid #e7e7e7;
+  border-left: 1px solid #e7e7e7;
+  border-bottom: 1px solid #e7e7e7;;
+}
+
+.employeesCon{
+  display: flex;
+  flex-direction: row;
+  height: fit-content;
+  width: 93%;
+}
+
+.employeeCon{
+  height: 52px;
+  width: 29.3%;
+  border-right: 1.2px solid #ddd;
+  box-sizing: border-box;
+  font-weight: 600;
+  padding: 18px;
+}
+
+.timeTextCon{
+  height: 52px;
+  width: 6.5%;
+  border-right: 1.2px solid #ddd;
+  box-sizing: border-box;
+  font-weight: 600;
+  padding: 17px;
+  text-align: center;
+}
+
+.tableContainer{
+  display: flex;
+  justify-content: flex-start;
+  width: 100%;
+  height: 85vh;
+  margin-top: 80px;
+  padding: 0 35px 20px 35px;
+  box-sizing: border-box;
+}
+
+.tableHeader{
+  width: 100%;
+}
+
+.table{
+  border-collapse: collapse;
+  table-layout: fixed;
+  width: 100%;
+}
+
+.tableBody{
+}
+
+.tableRow{
+  width: 100%;
+}
+
+.tableCell{
+  border: solid #ccc 1px;
+}
+
+.con{
+  overflow: hidden;
+  height: 100px;
+  font-size: 12px;
+  padding: 5px;
+  box-sizing: border-box;
+}
+
+.dayText{
+  font-weight: 500;
+}
+
+.appTypeText{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 100%;
+  height: 16px;
+  margin-top: 5px;
+  padding: 2px;
+}
+
+.appTypeText:hover{
+  background-color: red;
+  border-radius: 8px;
+}
+
+.timeDot{
+  background: red;
+  border-radius: 50%;
+  content: "";
+  position: absolute;
+  height: 12px;
+  margin-left: -6.5px;
+  width: 12px;
+  z-index: 5;
+  left: 85px;
+}
+
+.timeLine{
+  border-top: red solid 2px;
+  position: absolute;
+  z-index: 5;
+  left: 82px;
+  right: 0;
+  pointer-events: none;
+ 
+}
+
+.circle{
+  height: 9px;
+  width: 9px;
+  background-color: #73C1ED;
+  margin-right: 4px;
+  border-radius: 50%;
+}

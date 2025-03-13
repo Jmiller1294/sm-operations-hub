@@ -1,14 +1,20 @@
 import React from 'react';
 import Link from 'next/link';
 import styles from '../styles/Sidebar.module.css';
-import { FaBook, FaCalendar, FaFolder, FaHome, FaServicestack } from 'react-icons/fa';
+import { 
+  FaBook, 
+  FaCalendar, 
+  FaFolder, 
+  FaHome, 
+  FaServicestack 
+} from 'react-icons/fa';
 import { FaGear, FaPerson } from 'react-icons/fa6';
 import { Item } from '../types/types';
 
 
 const navList = [
   {icon: <FaHome />, title: 'Dashboard', path: '/'},
-  {icon: <FaCalendar />, title: 'Appointments', path: '/appointments'},
+  {icon: <FaCalendar />, title: 'Appointments', path: '/appointments/calendar'},
   {icon: <FaBook />, title: 'Quotes', path: '/'},
   {icon: <FaFolder />, title: 'Scheduling', path: '/'},
   {icon: <FaPerson />, title: 'Customers', path: '/'},

@@ -3,6 +3,7 @@ import './styles/Homepage.module.css';
 import './styles/globals.css';
 import Header from "./components/Header";
 import Sidebar from "./components/Sidebar";
+import { Provider } from "./context/appointmentsContext";
 
 
 export const metadata: Metadata = {
@@ -21,7 +22,9 @@ export default function RootLayout({
         <Sidebar />
         <div className="main-container">
           <Header />
-          <main>{children}</main>
+          <Provider>
+            <main>{children}</main>
+          </Provider>
         </div>
       </body>
     </html>

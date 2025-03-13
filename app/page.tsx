@@ -2,11 +2,7 @@ import React from 'react';
 import DashboardPage from './dashboard/page';
 
 const HomePage = () => {
-  return (
-    <>
-      <DashboardPage />
-    </>
-  )
+  return <DashboardPage />
 }
 
 export default HomePage
