@@ -15,15 +15,16 @@ export type Appointment = {
   date: string;
   startTime: string;
   endTime: string;
+  startDateTime: string;
+  endDateTime: string;
   dateCreated: string;
-  datetime:string;
   price: string;
   paid: string;
   amountPaid: string;
   type: string;
   notes: string;
   appointmentTypeID: number,
-  duration: string;
+  duration: number;
   calendar: string;
   calendarID: number,
   canClientCancel: false,

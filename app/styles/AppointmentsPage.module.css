@@ -72,11 +72,11 @@
 }
 
 .toggleInput:checked + .toggleLabel span:first-child {
-  transition: color 0.3s;
+  
 }
 
 .toggleInput:checked + .toggleLabel span:last-child {
-  transition: color 0.3s;
+ 
 }
 
 .IconContainer{
@@ -100,6 +100,7 @@
   border-radius: 25px;
   font-size: 0.8rem;
   font-weight: 600;
+  cursor: pointer;
 }
 
 .appointmentButton{
@@ -114,6 +115,7 @@
   font-weight: 550;
   border: none;
   box-sizing: border-box;
+  cursor: pointer;
 }
 
 .buttonsContainer{
@@ -172,7 +174,7 @@
   z-index: 2;
 }
 
-.toggleCon:before label:first-of-type span{
+.toggleCon[data-position="left"] label:first-of-type span{
   color: #ffffff !important;
 }
 

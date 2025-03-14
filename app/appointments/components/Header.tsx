@@ -23,7 +23,7 @@ const Header = () => {
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const date = format(Date.now(), 'MMM dd, yyyy');
-  const [position, setPosition] = useState(''); 
+  const [position, setPosition] = useState('left'); 
   const [mounted, setMounted] = useState(false);
  
 
@@ -185,6 +185,7 @@ const Header = () => {
             <label 
               htmlFor="left" 
               className={styles.toggleLab}
+              data-position={position}
             >
               <span 
                 style={position === "left" ? 
@@ -207,7 +208,10 @@ const Header = () => {
                   'week',
               )}
             />
-            <label htmlFor="center" className={styles.toggleLab}><span style={position === "center" ? {color: '#ffffff'} : {color: '#000000'}}>Week</span></label>
+            <label 
+              htmlFor="center" 
+              className={styles.toggleLab}
+            ><span style={position === "center" ? {color: '#ffffff'} : {color: '#000000'}}>Week</span></label>
             <input
               type="radio"
               id="right"

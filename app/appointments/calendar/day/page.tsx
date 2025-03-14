@@ -1,108 +1,152 @@
 'use client'
-import { useEffect, useState, useRef, useContext } from "react";
+import { 
+  useEffect, 
+  useState, 
+  useRef, 
+  useContext, 
+  useMemo 
+} from "react";
 import styles from '../../../styles/Calendar.module.css';
 import { 
   format, 
   getHours, 
-  getMinutes, 
-  hoursToMinutes 
+  getMinutes,  
+  parse
 } from 'date-fns';
-import { Employee } from "@/app/types/types";
+import { Appointment, Employee } from "@/app/types/types";
 import { Context } from "@/app/context/appointmentsContext";
+import { useSearchParams } from 'next/navigation';
 
 
 const DayViewCalendar = () => {
-  const [timeSlots, setTimeSlots] = useState<string[]>([]);
+  const date = useMemo(() => new Date(), []);
   const [lineHeight, setLineHeight] = useState(0);
   const [dotHeight, setDotHeight] = useState(0);
-  const [employees, setEmployees] = useState<Employee[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState("");
   const numbers = Array.from(Array(25).keys()); 
   const elementRef = useRef<any>();
-  const { state, getEmployees } = useContext(Context);
+  const { 
+    state, 
+    getEmployees, 
+    getAppointments 
+  } = useContext(Context);
+  const searchParams = useSearchParams();
+
+  useEffect(() => {
+    getEmployees();
+    getAppointments();
+    scrollToTime();
+  },[]); 
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setDotHeight((prev) => prev + 1);
+      setLineHeight((prev) => prev + 1);
+    }, 60000);
   
+    return () => clearInterval(interval);
+  }, []); 
 
-
-  // useEffect(() => {
-  //   createTimeSlots();
-  //   scrollToTime();
-  // },[]);
-
-  // useEffect(() => {
-  //   //Implementing the setInterval method
-  //   const interval = setInterval(() => {
-  //     setDotHeight(dotHeight + 1);
-  //     setLineHeight(lineHeight + 1);
-  //   }, 60000);
-
-    //Clearing the interval
-//     return () => clearInterval(interval);
-// }, [dotHeight, lineHeight]);
-
-  const createTimeSlots = () => {
-    const times = [];
-    for (let hour = 1; hour <= 24; hour++) {
-      if(hour < 12) {
-        times.push(`${hour}:00 am`);
-      }
-      else if(hour === 12) {
-       times.push(`${hour}:00 pm`);
-      }
-      else if(hour === 24) {
-        times.push(`${hour - 12}:00 am`);
-      }
-      else {
-        times.push(`${hour - 12}:00 pm`);
-      }
-    }
-    setTimeSlots(times);
-  }
+  const timeSlots = useMemo(() => {
+    return Array.from({ length: 24 }, (_, hour) => {
+      const formattedHour = 
+      hour === 0 ? 12 : hour > 12 ? hour - 12 : hour;
+      const period = hour >= 12 ? 'pm' : 'am';
+      return `${formattedHour}:00 ${period}`;
+    });
+  }, []);
 
   const scrollToTime = () => {
-    // //const minutes = hoursToMinutes(getHours(new Date()));
-    // //const halfMinutes = getMinutes(new Date());
-    // setDotHeight((minutes + halfMinutes) - 5);
-    // setLineHeight(minutes + halfMinutes);
-    // setTimeout(() => {
-    //   elementRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
-    // }, 500)
+    const currentTime = date;
+    const minutesSinceMidnight = (getHours(currentTime) * 60) + 60 + getMinutes(currentTime);
+    setDotHeight(minutesSinceMidnight - 5);
+    setLineHeight(minutesSinceMidnight);
+    elementRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
   }
 
-  const getStartPosition = (time:string) => {  
-    const [hour] = time.split(":").map(Number);
-    const minutes = parseInt(time.split(":")[1]);
+  const getStartPosition = (time: string) => { 
+    const parsedTime = parse(time, 'hh:mm a', date);
+    return ((getHours(parsedTime) * 60) + 60) + getMinutes(parsedTime);
+  };
 
-    if(time.includes('am')) {
-      if(hour === 12) {
-        return getStartPixels(hour + 12, minutes);
-      }
-      return getStartPixels(hour, minutes);
+  const getTimeSlotHeight = (appointment:Appointment) => { 
+    const { duration, startDateTime, endDateTime} = appointment;
+    if(getHours(endDateTime) < getHours(startDateTime)) {
+      return (duration - ((getHours(endDateTime) * 60) + getMinutes(endDateTime)) - 5);
     }
-    else {
-      if(hour === 12) {
-        return getStartPixels(hour, minutes);
-      }
-      else if(hour < 12) {
-        return getStartPixels(hour + 12, minutes);
-      }
-    }
+    return duration - 5;
   };
 
-  const getStartPixels = (hour:number, minutes:number) => { 
-    return Math.abs((((hour - 1) * 59) + minutes) + (hour * 1) + 59);
-  };
-
-  const getTimeSlotHeight = (appointment:any) => { 
-    return parseInt(appointment.duration) - 5;
-  };
-
-  const handleClick = (type:string, id:number) => {
-    //toggleModal(type, id);
-  };
+  const filteredAppointments = useMemo(() => {
+    return state.employees?.reduce((acc: any, employee:Employee) => {
+      acc[employee.name] = state.appointments?.filter(
+        (app: Appointment) =>
+          app.calendar === employee.name &&
+          app.date === format(
+            searchParams.get('date') ? new Date(searchParams.get('date')!) : date,
+            'MMMM dd, yyyy'
+          )
+      );
+      return acc;
+    }, {} as Record<string, Appointment[]>);
+  }, [state.employees, state.appointments, searchParams, date]);
 
   return (
-    <div>Day</div>
+    <div className={styles.calendarContainer}>
+      <div 
+        className={styles.timeDot} 
+        style={{ top: dotHeight }}
+      ></div>
+      <div 
+        className={styles.timeLine} 
+        style={{ top: lineHeight }}
+      ></div>
+      <div className={styles.timeColumn}>
+        {timeSlots.map((time:string, index:number) => {
+          if(index === parseInt(format(date, "H"))) {
+            return(<div ref={elementRef} key={index} className={styles.timeSlot}>
+              {time}
+            </div>)
+          }
+          else {
+            return(<div key={index} className={styles.timeSlot}>
+              {time}
+            </div>)
+          }
+        })}
+      </div> 
+      {state.employees?.map((employee: Employee, idx: number) => {
+        const employeeAppointments = filteredAppointments?.[employee.name] || [];
+
+        return (
+          <div className={styles.col} key={idx}>
+            {employeeAppointments.map((appointment: Appointment) => (
+              <div
+                key={appointment.id}
+                className={styles.appointment}
+                style={{
+                  top: `${getStartPosition(appointment.startTime)}px`,
+                  height: getTimeSlotHeight(appointment),
+                }}
+                onClick={() => console.log('clicked')}
+              >
+                <div className={styles.appointmentInfoCon}>
+                  <span className={styles.appointmentName}>
+                    {appointment.firstName} {appointment.lastName}: &nbsp;
+                  </span>
+                  <span className={styles.appointmentType}>{appointment.type}</span>
+                </div>
+                <div>
+                  {appointment.startTime} - {appointment.endTime}
+                </div>
+              </div>
+            ))}
+            {numbers.map((index) => (
+              <div key={index} className={styles.row}></div>
+            ))}
+          </div>
+        );
+      })}
+    </div>
   );
 };
 

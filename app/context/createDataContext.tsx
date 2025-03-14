@@ -8,6 +8,7 @@ type Props = {
 interface MyContextProps {
   state: any;
   getEmployees: () => [];
+  getAppointments: () => [];
 }
 
 export const createDataContext  = (

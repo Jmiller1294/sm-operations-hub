@@ -4,10 +4,7 @@ import DayViewCalendar from './day/page';
 
 
 const CalendarPage = () => {
-  
-  return (
-    <DayViewCalendar />
-  )
+  return <DayViewCalendar />;
 }
 
 export default CalendarPage
