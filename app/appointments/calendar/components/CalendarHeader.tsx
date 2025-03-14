@@ -63,7 +63,11 @@ const CalendarHeader = () => {
               {getDaysOfWeek().map((day:Date, index: number) => (
                 <div 
                   key={index}
-                  className={styles.DayCon}
+                  className={
+                    `${styles.DayCon} 
+                     ${format(day, 'EEEE, MMM d') === format(date, 'EEEE, MMM d') 
+                     ? styles.borderBottom : null}
+                    `}
                 >
                   {format(day, 'EEEE, MMM d')}
                 </div>
@@ -71,26 +75,8 @@ const CalendarHeader = () => {
             </div>
           </div> 
         );
-      case '/appointments/calendar/month':
-        return <div>month</div>
       default:
-        return( 
-          <div className={styles.employeeInfoCon}>
-            <div className={styles.timeTextCon}>
-              <span>Time</span>
-            </div>
-            <div className={styles.employeesCon}>
-              {state.employees?.map((employee:Employee, index: number) => (
-                <div 
-                  key={index}
-                  className={styles.employeeCon}
-                >
-                  {employee.name}
-                </div>
-              ))}
-            </div>
-          </div>
-        );
+        return null;
     }
   };
 

@@ -142,8 +142,6 @@ const WeekPage = () => {
           >
             {appointments
             ?.map((appointment:Appointment, idx:number) => {
-          
-
               return (
                 <div
                   key={idx}
