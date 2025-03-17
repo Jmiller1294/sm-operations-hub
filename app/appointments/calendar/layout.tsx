@@ -8,9 +8,7 @@ const CalendarLayout = ({ children } : LayoutProps) => {
   return (
     <>
       <CalendarHeader />
-      <main 
-        className={styles.mainContainer}
-      >
+      <main className={styles.mainContainer}>
         {children}
       </main>
     </>

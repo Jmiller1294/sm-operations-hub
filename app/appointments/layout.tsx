@@ -1,15 +1,18 @@
-import React from 'react';
+'use client'
+import React, { useContext } from 'react';
 import Header from './components/Header';
 import { LayoutProps } from '@/.next/types/app/layout';
-import { Provider } from '../context/appointmentsContext';
+import Modal from '../components/Modal';
+import { Context } from '../context/appContext';
+
 
 const AppointmentsPageLayout = ({ children } : LayoutProps) => {
+   const { state } = useContext(Context);
   return (
     <>
-      <Provider>
-        <Header />
-        <main>{children}</main>
-      </Provider>
+      <Header />
+      <main>{children}</main>
+      <Modal />
     </>
   )
 }

@@ -1,24 +1,32 @@
-import React from 'react';
+'use client';
+import React, { useContext, useEffect } from 'react';
 import styles from '../styles/Modal.module.css';
 import { ModalProps } from '../types/types';
+import { Context as AppContext } from '../context/appContext';
 
 
-const Modal = ({ isOpen, onClose, children } : ModalProps) => {
+const Modal = () => {
+  const { closeModal, state } = useContext(AppContext);
+  useEffect(() => {
+    console.log(state)
+  }, [state])
+
+  
   return (
     <div>
       <div 
         className={
-          isOpen ? `${styles['modal-overlay']} ${styles['open-overlay']}` 
-          : styles['modal-overlay']} onClick={onClose}
+          state.isModalOpen ? `${styles['modal-overlay']} ${styles['open-overlay']}` 
+          : styles['modal-overlay']} onClick={closeModal}
       >
       </div>
       <div 
         className={
-          isOpen ? `${styles['side-modal']} ${styles.open}` 
+          state.isModalOpen ? `${styles['side-modal']} ${styles.open}` 
           : styles['side-modal']}
       >
         <div className={styles['modal-content']}>
-          {children}
+        {state.modalContent}
         </div>
       </div>
     </div>

@@ -1,4 +1,3 @@
-import { ReducerActions, ReducerState } from "next/dist/client/components/router-reducer/router-reducer-types";
 import React, { useReducer, createContext, Reducer, ReactNode } from "react";
 
 type Props = {
@@ -9,6 +8,8 @@ interface MyContextProps {
   state: any;
   getEmployees: () => [];
   getAppointments: () => [];
+  openModal: (content:any) => void;
+  closeModal: () => void;
 }
 
 export const createDataContext  = (

@@ -1,0 +1,44 @@
+.timeSlotsCon{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 100%;
+  height: fit-content;
+  justify-content: space-evenly;
+}
+
+.timeSlot{
+  display: flex;
+  height: 40px;
+  width: 44%;
+  border: 1px solid rgb(0, 105, 255);
+  justify-content: center;
+  align-items: center;
+  border-radius: 5px;
+  margin-bottom: 8px;
+  color: rgb(0, 105, 255);
+  font-weight: 700;
+  font-size: 14px;
+  background: #fff;
+}
+
+.timeSlot:hover{
+  border: 2px solid rgb(0, 105, 255);
+}
+
+.calendarDetails {
+  padding: 12px 0 10px 30px;
+  width: 100%;
+  height: fit-content;
+}
+
+.calendarContainer{
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+}
+
+.calendarContainer > div:nth-of-type(1){
+  border: none !important;
+  box-shadow: none !important; /* Optional: Removes shadow */
+}

@@ -2,16 +2,25 @@ import React, { useState } from 'react';
 import styles from '../../styles/Forms.module.css';
 import { EditAppointmentFormProps } from '@/app/types/types';
 
-const EditAppointmentForm = ({data, onClose, onCancel, onSave} : EditAppointmentFormProps) => {
-  const [calendar, setCalendar] = useState('hello');
-  const [appointment, setAppointment] = useState('');
-  const [firstName, setFirstName] = useState(data.firstName);
-  const [lastName, setLastName] = useState(data.lastName);
-  const [email, setEmail] = useState(data.email);
-  const [phone, setPhone] = useState(data.phone);
-  const [address, setAddress] = useState(data.address);
-  const [notes, setNotes] = useState(data.notes);
+const EditAppointmentForm = ({data, onClose, onClick } : EditAppointmentFormProps) => {
+  const [values, setValues] = useState({
+    calendar: 'hello',
+    appointment: '',
+    firstName: data.firstName,
+    lastName: data.lastName,
+    email: data.email,
+    phone: data.phone,
+    address: data.address,
+    notes: data.notes
+  })
 
+  const handleChanges = (e:any) => {
+    setValues({...values, [e.target.name]:[e.target.value]});
+  }
+
+  const handleOnSave = () => {
+    onClick('Save');
+  }
 
 
   return (
@@ -23,9 +32,10 @@ const EditAppointmentForm = ({data, onClose, onCancel, onSave} : EditAppointment
         <div className={styles.buttonContainer}>
           <button 
             className={`${styles.button} ${styles.black}`}
-            onClick={() => onSave('appointment info', data.id,)}
+            onClick={() => handleOnSave()}
           >Save</button>
-          <button className={styles.button} onClick={() => onCancel('appointment info', data.id)}>Cancel Edit</button>
+          <button 
+            className={styles.button} onClick={() => onClick('Cancel')}>Cancel Edit</button>
         </div>
       </div>
       <form className={styles.form}>
@@ -43,8 +53,8 @@ const EditAppointmentForm = ({data, onClose, onCancel, onSave} : EditAppointment
             name="cars" 
             id="cars" 
             className={styles['input-text']}
-            value={calendar}
-            onChange={(e) => setCalendar(e.target.value)}
+            value={values.calendar}
+            onChange={(e) => handleChanges(e)}
           >
             <option value="volvo">Volvo</option>
             <option value="saab">Saab</option>
@@ -58,8 +68,8 @@ const EditAppointmentForm = ({data, onClose, onCancel, onSave} : EditAppointment
             name="cars" 
             id="cars" 
             className={styles['input-text']}
-            value={appointment}
-            onChange={(e) => setAppointment(e.target.value)}
+            value={values.appointment}
+            onChange={(e) => handleChanges(e)}
           >
             <option value="volvo">Volvo</option>
             <option value="saab">Saab</option>
@@ -72,8 +82,8 @@ const EditAppointmentForm = ({data, onClose, onCancel, onSave} : EditAppointment
           <input 
             type='text' 
             className={styles['input-text']}
-            value={firstName}
-            onChange={(e) => setFirstName(e.target.value)}
+            value={values.firstName}
+            onChange={(e) => handleChanges(e)}
           />
         </div>
         <div className={styles.textContainer}>
@@ -81,8 +91,8 @@ const EditAppointmentForm = ({data, onClose, onCancel, onSave} : EditAppointment
           <input 
             type='text' 
             className={styles['input-text']}
-            value={lastName}
-            onChange={(e) => setLastName(e.target.value)}
+            value={values.lastName}
+            onChange={(e) => handleChanges(e)}
           />
         </div>
         <div className={styles.textContainer}>
@@ -90,8 +100,8 @@ const EditAppointmentForm = ({data, onClose, onCancel, onSave} : EditAppointment
           <input 
             type='text' 
             className={styles['input-text']}
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            value={values.email}
+            onChange={(e) => handleChanges(e)}
           />
         </div>
         <div className={styles.textContainer}>
@@ -99,8 +109,8 @@ const EditAppointmentForm = ({data, onClose, onCancel, onSave} : EditAppointment
           <input 
             type='text' 
             className={styles['input-text']}
-            value={phone}
-            onChange={(e) => setPhone(e.target.value)}
+            value={values.phone}
+            onChange={(e) => handleChanges(e)}
           />
         </div>
         <div className={styles.textContainer}>
@@ -108,16 +118,16 @@ const EditAppointmentForm = ({data, onClose, onCancel, onSave} : EditAppointment
           <input 
             type='text' 
             className={styles['input-text']}
-            value={address}
-            onChange={(e) => setAddress(e.target.value)}
+            value={values.address}
+            onChange={(e) => handleChanges(e)}
           />
         </div>
         <div style={{marginTop: '30px'}}>
           <h4>Notes</h4>
           <textarea 
             className={styles['input-textarea']}
-            value={notes}
-            onChange={(e) => setNotes(e.target.value)}
+            value={values.notes}
+            onChange={(e) => handleChanges(e)}
           />
         </div>
       </form>

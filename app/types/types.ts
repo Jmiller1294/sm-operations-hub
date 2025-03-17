@@ -38,10 +38,15 @@ export type AccordionItem = {
   content: string;
 }   
 
+export type AppointmentDetailsProps = {
+  data: Appointment;
+  onClose: () => void;
+  onClick: (type:string) => void;
+};
+
 export type AppointmentInfoProps = {
-  data: unknown;
-  onClose: (type:string, id:number) => void;
-  open: (type:string, id:number) => void;
+  data: Appointment;
+  onClose: () => void;
 };
 
 export type Item = {
@@ -52,20 +57,12 @@ export type Item = {
 
 export type ModalProps = {
   isOpen:  boolean;
-  onClose: () => void; 
-  children: ReactNode;
 }
 
 export type EditAppointmentFormProps = {
-  data: unknown; 
-  onClose: (type:string, id:number) => void;
-  onCancel: (type:string, id:number) => void; 
-  onSave: (type:string, id:number) => void;
-}
-
-export type NewAppointmentFormProps = {
-  data: unknown; 
-  onClose: (type:string, id:number) => void;
+  data: Appointment 
+  onClose: () => void;
+  onClick: (type:string) => void; 
 }
 
 export type CalendarHeaderProps = {
@@ -78,4 +75,19 @@ export type Employee = {
   id: number;
   name: string;
   hours: number;
+}
+
+export type AccordianProps = {
+  title: string;
+  content: ReactNode;
+  id: number;
+  step: number;
+}
+
+export type DatetimePickerProps = {
+  onClick: () => void;
+}
+
+export type NewAppointmentFormProps = {
+  onClose: () => void;
 }

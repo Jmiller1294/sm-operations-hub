@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 'use client'
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useContext, useEffect, useState } from 'react';
 import { useRouter, useSearchParams, usePathname } from 'next/navigation';
 import { FaList, FaRegCalendarAlt } from "react-icons/fa";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
@@ -16,9 +16,13 @@ import {
   format
 } from 'date-fns';
 import styles from '../../styles/AppointmentsPage.module.css';
+import { Context } from '@/app/context/appContext';
+import NewAppointmentForm from '@/app/components/forms/NewAppointmentForm';
+import { BiNews } from 'react-icons/bi';
 
 
 const Header = () => {
+  const { state, openModal, closeModal } = useContext(Context);
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -101,10 +105,13 @@ const Header = () => {
     }
   }
 
-
-  const toggleModal = () => {
-    
+  const handleModalOpen = () => {
+    openModal(<NewAppointmentForm onClose={handleModalClose}/>);
   };
+
+  const handleModalClose = () => {
+    closeModal();
+  }
 
   const handlePositionChange = useCallback((position: string, type: string) => {
     setPosition(position);
@@ -230,7 +237,7 @@ const Header = () => {
           </div>
           <button 
             className={styles.appointmentButton} 
-            onClick={() => toggleModal()}
+            onClick={() => handleModalOpen()}
           >
             New Appointment
           </button>

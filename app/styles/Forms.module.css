@@ -1,0 +1,116 @@
+.close-button {
+  font-size: 16px;
+  cursor: pointer;
+  border: none;
+  background: none;
+  justify-self: flex-start;
+  margin-left: 10px;
+}
+
+.buttonCon{
+  display: flex;
+  width: 100%;
+  height: auto;
+  box-sizing: border-box;
+  padding: 10px;
+  border-bottom: 1px solid rgb(225, 225, 225);
+}
+
+.editInfoCon{
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100vh;
+  box-sizing: border-box;
+  overflow-y: scroll;
+}
+
+.textContainer{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid rgb(225, 225, 225);
+  font-size: 14px;
+  box-sizing: border-box;
+  line-height: 22px;
+}
+
+.input-text{
+  height: 34px;
+  width: 50%;
+  padding: 6px 10px;
+  box-sizing: border-box;
+  border: 1px solid #ccc;
+  font-size: 13px;
+}
+
+.input-textarea{
+  border: 1px solid #ccc;
+  height: 116px;
+  width: 100%;
+  padding: 16px 10px;
+}
+
+.input-select{
+  height: 34px;
+  width: 50%;
+  padding: 6px 10px;
+  box-sizing: border-box;
+  border: 1px solid #ccc;
+  font-size: 13px;
+}
+
+.textContainer label{
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.textContainer p{
+ margin: 0;
+}
+
+.buttonContainer{
+  display: flex;
+  width: 30%;
+  margin-left: auto;
+  justify-content: space-evenly;
+}
+
+.button{
+  height: 32px;
+  font-size: 16px;
+  font-weight: 550;
+  border: none;
+  border-radius: 4px;
+  padding-right: 14px;
+  padding-left: 14px;
+}
+
+.black{
+  background-color: black;
+  color: #fff;
+}
+
+.button:hover{
+  opacity: 0.6;
+  cursor: pointer;
+}
+
+.form{
+  padding: 30px;
+  display: block;
+  margin-top: 10px;
+}
+
+.selectCon{
+  width: 100%;
+  height: fit-content;
+}
+
+.selectApp{
+  width: 50%;
+  height: 32px;
+}

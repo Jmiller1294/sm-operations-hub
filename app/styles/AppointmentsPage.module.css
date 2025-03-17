@@ -260,6 +260,14 @@
   overflow-y: scroll;
 }
 
+.appointment-info-con-2 {
+  margin-top: 48px;
+}
+
+.appointment-info-con-2 h4{
+  margin-bottom: 10px;
+}
+
 .appointmentButtonCon{
   display: flex;
   width: 100%;
@@ -312,3 +320,4 @@
   display: flex; 
   flex-direction: row;
 }
+

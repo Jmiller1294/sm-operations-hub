@@ -1,0 +1,42 @@
+.modal-overlay{
+  position: fixed;
+  top: 0;
+  right: -810px;
+  width: 35.6%;
+  height: 100vh;
+  z-index: 1000;
+  background-color: transparent;
+  transition: right 0.3s ease-in-out;
+}
+
+.side-modal {
+  position: fixed;
+  top: 0;
+  right: -810px; /* Initially hidden off-screen */
+  width: 50%;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+  transition: right 0.3s ease-in-out; /* Smooth transition for opening/closing */
+  z-index: 1000; /* Ensure it's on top of other content */
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+}
+
+.open{
+  right: 0; /* Slide in when open */
+}
+
+.open-overlay{
+  right: 640px; /* Slide in when open */
+}
+
+.modal-content {
+  background-color: white;
+  height: 100%;
+}
+
+.close-button {
+  font-size: 16px;
+  cursor: pointer;
+  border: none;
+  background: none;
+}

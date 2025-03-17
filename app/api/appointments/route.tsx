@@ -28,7 +28,7 @@ export const appointments = [
     timezone: "America/New_York"
   },
   {
-    id: 1,
+    id: 2,
     firstName: "Bob",
     lastName: "McTest",
     phone: "",
@@ -55,7 +55,7 @@ export const appointments = [
     timezone: "America/New_York"
   },
   {
-    id: 1,
+    id: 3,
     firstName: "Bob",
     lastName: "McTest",
     phone: "",

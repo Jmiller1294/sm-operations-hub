@@ -14,8 +14,10 @@ import {
   parse
 } from 'date-fns';
 import { Appointment, Employee } from "@/app/types/types";
-import { Context } from "@/app/context/appointmentsContext";
+import { Context as AppointmentContext } from "@/app/context/appointmentsContext";
+import { Context as AppContext } from "@/app/context/appContext";
 import { useSearchParams } from 'next/navigation';
+import AppointmentInfo from "../../components/AppointmentInfo";
 
 
 const DayViewCalendar = () => {
@@ -23,13 +25,18 @@ const DayViewCalendar = () => {
   const [lineHeight, setLineHeight] = useState(0);
   const [dotHeight, setDotHeight] = useState(0);
   const numbers = Array.from(Array(25).keys()); 
-  const elementRef = useRef<any>();
+  const elementRef = useRef<HTMLDivElement>(null);
   const { 
     state, 
     getEmployees, 
-    getAppointments 
-  } = useContext(Context);
+    getAppointments
+  } = useContext(AppointmentContext);
+  const {
+    openModal,
+    closeModal
+  } = useContext(AppContext);
   const searchParams = useSearchParams();
+  
 
   useEffect(() => {
     getEmployees();
@@ -54,6 +61,19 @@ const DayViewCalendar = () => {
       return `${formattedHour}:00 ${period}`;
     });
   }, []);
+
+  const handleModalOpen = (id:number) => {
+    openModal(
+      <AppointmentInfo 
+        data={state.appointments[id - 1]}
+        onClose={handleModalClose}
+      />
+    );
+  };
+
+  const handleModalClose = () => {
+    closeModal();
+  };
 
   const scrollToTime = () => {
     const currentTime = date;
@@ -127,7 +147,7 @@ const DayViewCalendar = () => {
                   top: `${getStartPosition(appointment.startTime)}px`,
                   height: getTimeSlotHeight(appointment),
                 }}
-                onClick={() => console.log('clicked')}
+                onClick={() => handleModalOpen(appointment.id)}
               >
                 <div className={styles.appointmentInfoCon}>
                   <span className={styles.appointmentName}>
