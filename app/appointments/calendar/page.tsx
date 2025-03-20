@@ -1,10 +1,8 @@
-'use client'
-import React from 'react';
-import DayViewCalendar from './day/page';
-
+import React from "react";
+import DayViewCalendar from "./day/page";
 
 const CalendarPage = () => {
   return <DayViewCalendar />;
-}
+};
 
-export default CalendarPage
+export default CalendarPage;

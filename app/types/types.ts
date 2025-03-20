@@ -1,7 +1,7 @@
 import { ReactNode } from "react";
 
 export type DashBoardCardProps = {
-  size:string;
+  size: string;
   children: ReactNode;
 };
 
@@ -23,25 +23,25 @@ export type Appointment = {
   amountPaid: string;
   type: string;
   notes: string;
-  appointmentTypeID: number,
+  appointmentTypeID: number;
   duration: number;
   calendar: string;
-  calendarID: number,
-  canClientCancel: false,
-  canClientReschedule: false,
+  calendarID: number;
+  canClientCancel: false;
+  canClientReschedule: false;
   location: string;
   timezone: string;
-}
+};
 
 export type AccordionItem = {
   title: string;
   content: string;
-}   
+};
 
 export type AppointmentDetailsProps = {
   data: Appointment;
   onClose: () => void;
-  onClick: (type:string) => void;
+  onClick: (type: string) => void;
 };
 
 export type AppointmentInfoProps = {
@@ -50,44 +50,49 @@ export type AppointmentInfoProps = {
 };
 
 export type Item = {
-  icon: ReactNode;
+  icon?: ReactNode;
   title: string;
   path: string;
+  subPaths: any[];
 };
 
 export type ModalProps = {
-  isOpen:  boolean;
-}
+  isOpen: boolean;
+};
 
 export type EditAppointmentFormProps = {
-  data: Appointment 
+  data: Appointment;
   onClose: () => void;
-  onClick: (type:string) => void; 
-}
+  onClick: (type: string) => void;
+};
 
 export type CalendarHeaderProps = {
-  type: string; 
-  employees: Employee[]; 
+  type: string;
+  employees: Employee[];
   daysOfWeek: Date[];
-}
+};
 
 export type Employee = {
   id: number;
   name: string;
-  hours: number;
-}
+  workingHours: number;
+  availabilityStartTime: string;
+  availabilityEndTime: string;
+};
 
 export type AccordianProps = {
   title: string;
-  content: ReactNode;
-  id: number;
-  step: number;
-}
+  children: ReactNode;
+  id?: number;
+  step?: number;
+  icon?: ReactNode;
+  style?: any;
+};
 
 export type DatetimePickerProps = {
   onClick: () => void;
-}
+};
 
 export type NewAppointmentFormProps = {
   onClose: () => void;
-}
+};

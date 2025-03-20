@@ -1,28 +1,35 @@
 .accordion {
   max-width: 600px;
-  margin: 0.5rem auto;
+  width: 100%;
 }
 
 .accordion-title {
   display: flex;
+  align-items: center;
   flex-direction: row;
-  justify-content: space-between;
+  width: 100%;
+  font-size: 16px;
+  font-weight: 400;
   cursor: pointer;
+  color: #737791;
 }
 
 .accordion-title:hover {
-  
+  opacity: 0.5;
 }
 
-.accordion-title{
+.accordion-title:hover {
+}
+
+.accordion-title {
   padding: 1rem;
 }
 
 .accordion-content {
-  padding-left: 1rem;
+  padding-left: 2rem;
   padding-right: 1rem;
 }
 
-.accordion-content input{
+.accordion-content input {
   display: none;
 }

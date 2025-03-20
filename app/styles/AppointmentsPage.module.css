@@ -1,25 +1,26 @@
-.container{
+.container {
   width: 100%;
   height: 90vh;
   overflow-y: scroll;
   z-index: 1;
 }
 
-.header{
+.header {
   position: fixed;
   top: 68px; /* Position the navbar at the top of the page */
-  width: 88vw; /* Full width */
+  width: 85vw; /* Full width */
   height: fit-content;
-  z-index: 6;
+  z-index: 10;
   background: #ffffff;
   border-top: 1px solid #e7e7e7;
   border-left: 1px solid #e7e7e7;
+  border-bottom: 1px solid #e7e7e7;
 }
 
-.row{
-  display: flex; 
-  flex-direction: row; 
-  height: fit-content; 
+.row {
+  display: flex;
+  flex-direction: row;
+  height: fit-content;
   width: 100%;
   box-sizing: border-box;
   align-items: center;
@@ -39,107 +40,110 @@
   display: flex;
   position: relative;
   align-items: center;
-  justify-content: space-around;
-  width: 80px;
+  justify-content: space-between;
+  padding-left: 7px;
+  padding-right: 7px;
+  width: 72px;
   height: 36px;
   background: #efefef;
   border-radius: 25px;
-  border: 3px solid #e7e7e7; 
+  border: 3px solid #e7e7e7;
   cursor: pointer;
   transition: background 0.3s;
   box-sizing: border-box;
 }
 
 .toggleLabel::before {
-  content: '';
+  content: "";
   position: absolute;
-  width: 50%;
+  width: 45%;
   height: 100%;
   left: 0%;
-  border-radius: 25px;
+  border-radius: 48%;
   background: white;
   transition: all 0.3s;
 }
 
-.toggleLabel span{
+.toggleLabel span {
   text-align: center;
   z-index: 1;
 }
 
 /* Checked State */
 .toggleInput:checked + .toggleLabel::before {
-  left: 50%;
+  left: 55%;
 }
 
-.toggleInput:checked + .toggleLabel span:first-child {
-  
-}
-
-.toggleInput:checked + .toggleLabel span:last-child {
- 
-}
-
-.IconContainer{
+.IconContainer {
   display: flex;
   flex-direction: row;
+  justify-content: space-between;
   height: fit-content;
-  width: 8%;
+  width: 9%;
+  height: 40px;
+  padding: 10px;
   box-sizing: border-box;
   margin-top: 5px;
   align-items: center;
   margin-right: 10px;
 }
 
-.todayButton{
-  display: flex;
-  flex-direction: row;
-  height: 34px;
-  width: 16%;
-  justify-content: center;
-  align-items: center;
+.todayButton {
+  width: 8%;
+  background: #efefef;
+  padding: 9px;
   border-radius: 25px;
   font-size: 0.8rem;
   font-weight: 600;
   cursor: pointer;
+  margin-left: 10px;
+  border: 1.4px solid;
 }
 
-.appointmentButton{
+.todayButton:hover {
+  background-color: #ddd;
+}
+
+.newAppointmentButton {
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
   height: 34px;
-  width: 28%;
+  width: 44%;
   border-radius: 25px;
-  font-size: 0.8rem;
+  font-size: 0.9rem;
   font-weight: 550;
   border: none;
   box-sizing: border-box;
   cursor: pointer;
 }
 
-.buttonsContainer{
+.newAppointmentButton:hover {
+  background-color: #ddd;
+}
+
+.buttonsContainer {
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
   align-items: center;
   margin-left: auto;
   height: 40px;
-  width: 47%;
+  width: 30%;
   font-size: 0.9rem;
   font-weight: 550;
-  padding: 10px;
   box-sizing: border-box;
 }
 
-.verticalLine{
+.verticalLine {
   height: 26px;
-  border-left: 1.2px solid #c4c4c4;;
+  border-left: 1.2px solid #c4c4c4;
   margin-left: 5px;
   margin-right: 5px;
 }
 
-.dateText{
+.dateText {
   font-size: 1.4rem;
   font-weight: bold;
 }
@@ -161,7 +165,7 @@
   display: none;
 }
 
-.toggleLab::before{
+.toggleLab::before {
   content: "";
 }
 
@@ -174,49 +178,24 @@
   z-index: 2;
 }
 
-.toggleCon[data-position="left"] label:first-of-type span{
+.toggleCon[data-position="left"] label:first-of-type span {
   color: #ffffff !important;
 }
 
-.toggleSlider {
-  position: absolute;
-  top: 3px;
-  left: 4px;
-  width: 70px;
-  height: 28px;
-  background: rgb(52, 72, 99);
-  border-radius: 25px;
-  transition: all 0.3s ease-in-out;
-  z-index: 1;
-}
-
-.disabled{
-  background: grey;
-}
-
-/* Move the slider based on the position */
-.toggleSlider[data-position="center"] {
-  left: 70px;
-}
-
-.toggleSlider[data-position="right"] {
-  left: 136px;
-}
-
-.calendarArrows{
-  padding: 10px;
-  background: #ffffff;
-  border-radius: 50%;
-}
-
-.calendarArrows:hover{
-  padding: 10px;
-  background: #efefef;
+.calendarArrows {
+  background: none;
+  border: none;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
   cursor: pointer;
 }
 
-.todayText{
+.calendarArrows:hover {
+  background: #efefef;
+}
+
+.todayText {
   font-size: 20px;
   font-weight: normal;
   margin-left: 4px;
@@ -251,7 +230,7 @@
   justify-self: flex-start;
 }
 
-.appointmentInfoCon{
+.appointmentInfoCon {
   display: flex;
   flex-direction: column;
   width: 100%;
@@ -264,11 +243,11 @@
   margin-top: 48px;
 }
 
-.appointment-info-con-2 h4{
+.appointment-info-con-2 h4 {
   margin-bottom: 10px;
 }
 
-.appointmentButtonCon{
+.appointmentButtonCon {
   display: flex;
   width: 100%;
   height: auto;
@@ -277,7 +256,7 @@
   border-bottom: 1px solid rgb(225, 225, 225);
 }
 
-.appointmentbtns{
+.appointmentbtns {
   height: 32px;
   font-size: 16px;
   font-weight: 550;
@@ -287,37 +266,103 @@
   padding-left: 14px;
 }
 
-.appointmentbtns:hover{
- opacity: 0.6;
- cursor: pointer;
+.appointmentbtns:hover {
+  opacity: 0.6;
+  cursor: pointer;
 }
 
-.buttonContainer{
+.buttonContainer {
   display: flex;
   width: 45%;
   margin: auto;
   justify-content: space-evenly;
 }
 
-.textContainer{
+.textContainer {
   padding: 30px;
   overflow-y: scroll;
 }
 
-.appointment-info-text{
+.appointment-info-text {
   font-weight: 500;
   font-size: 16px;
   line-height: 32px;
   margin: 0;
 }
 
-.red{
+.red {
   color: red;
 }
 
-.textCon{
+.textCon {
   border-bottom: 1px solid rgb(225, 225, 225);
-  display: flex; 
+  display: flex;
   flex-direction: row;
 }
 
+/* Dropdown Button */
+.dropbtn {
+  width: 92px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #efefef;
+  padding: 6px;
+  border-radius: 25px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  border: 1.4px solid;
+}
+
+.settings-btn {
+  background: none;
+  border: none;
+  padding: 8px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+
+.settings-btn:hover {
+  background: #efefef;
+}
+
+/* The container <div> - needed to position the dropdown content */
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+/* Dropdown Content (Hidden by Default) */
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f1f1f1;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+}
+
+/* Links inside the dropdown */
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  z-index: 10;
+}
+
+/* Change color of dropdown links on hover */
+.dropdown-content a:hover {
+  background-color: #ddd;
+}
+
+/* Show the dropdown menu on hover */
+.active {
+  display: block;
+}
+
+/* Change the background color of the dropdown button when the dropdown content is shown */
+.dropdown:hover .dropbtn {
+  background-color: #ddd;
+}

@@ -1,20 +1,16 @@
-'use client'
-import React, { useContext } from 'react';
-import Header from './components/Header';
-import { LayoutProps } from '@/.next/types/app/layout';
-import Modal from '../components/Modal';
-import { Context } from '../context/appContext';
+import React from "react";
+import Header from "./components/Header";
+import { LayoutProps } from "@/.next/types/app/layout";
+import Modal from "../components/Modal";
 
-
-const AppointmentsPageLayout = ({ children } : LayoutProps) => {
-   const { state } = useContext(Context);
+const AppointmentsPageLayout = ({ children }: LayoutProps) => {
   return (
     <>
       <Header />
       <main>{children}</main>
       <Modal />
     </>
-  )
-}
+  );
+};
 
-export default AppointmentsPageLayout
+export default AppointmentsPageLayout;

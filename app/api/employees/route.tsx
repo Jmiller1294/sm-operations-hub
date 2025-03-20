@@ -2,19 +2,25 @@ export const employees = [
   {
     id: 1,
     name: "Millieann",
-    hours: 4
+    workingHours: 4,
+    availabilityStartTime: "10:00 am",
+    availabilityEndTime: "6:00 pm",
   },
   {
     id: 2,
     name: "Justin",
-    hours: 6
+    workingHours: 6,
+    availabilityStartTime: "10:00 am",
+    availabilityEndTime: "6:00 pm",
   },
   {
     id: 3,
     name: "Shine Masters",
-    hours: 8
-  }
-]
+    workingHours: 8,
+    availabilityStartTime: "10:00 am",
+    availabilityEndTime: "6:00 pm",
+  },
+];
 
 export async function GET() {
   return Response.json(employees);
@@ -25,14 +31,15 @@ export async function POST(request: Request) {
   const newEmployee = {
     id: employees.length + 1,
     name: employee.name,
-    hours: 10
+    workingHours: 4,
+    availabilityStartTime: "10:00 am",
+    availabilityEndTime: "6:00 pm",
   };
   employees.push(newEmployee);
   return new Response(JSON.stringify(newEmployee), {
     headers: {
-      "Content-Type": "application/json"
+      "Content-Type": "application/json",
     },
     status: 201,
-  })
+  });
 }
-

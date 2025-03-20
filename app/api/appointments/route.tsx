@@ -25,7 +25,7 @@ export const appointments = [
     canClientCancel: false,
     canClientReschedule: false,
     location: "",
-    timezone: "America/New_York"
+    timezone: "America/New_York",
   },
   {
     id: 2,
@@ -34,7 +34,7 @@ export const appointments = [
     phone: "",
     address: "2222 1st street",
     email: "bob.mctest@example.com",
-    date: "March 15, 2025",
+    date: "March 17, 2025",
     startTime: "8:00 am",
     endTime: "12:15 pm",
     startDateTime: "2025-03-14T08:00:00",
@@ -52,7 +52,7 @@ export const appointments = [
     canClientCancel: false,
     canClientReschedule: false,
     location: "",
-    timezone: "America/New_York"
+    timezone: "America/New_York",
   },
   {
     id: 3,
@@ -61,7 +61,7 @@ export const appointments = [
     phone: "",
     address: "2222 1st street",
     email: "bob.mctest@example.com",
-    date: "March 16, 2025",
+    date: "May 9, 2025",
     startTime: "10:00 am",
     endTime: "1:00 pm",
     startDateTime: "2025-03-16T10:00:00",
@@ -80,7 +80,7 @@ export const appointments = [
     canClientCancel: false,
     canClientReschedule: false,
     location: "",
-    timezone: "America/New_York"
+    timezone: "America/New_York",
   },
 ];
 

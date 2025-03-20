@@ -38,5 +38,6 @@
   font-size: 16px;
   cursor: pointer;
   border: none;
-  background: none;
+  background: #ffffff;
+  height: 20px;
 }
