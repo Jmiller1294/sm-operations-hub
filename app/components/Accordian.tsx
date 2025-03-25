@@ -11,6 +11,7 @@ const Accordion = ({
   children,
   icon,
   style,
+  isExpanded
 }: AccordianProps) => {
   const [isActive, setIsActive] = useState(false);
 
@@ -26,22 +27,35 @@ const Accordion = ({
     }
   }, [step, id]);
 
+  const handleClick = () => {
+    if(isExpanded) {
+      setIsActive(!isActive);
+    }
+  }
+
   return (
-    <div className={styles.accordion} style={style}>
+    <div className={styles.mainContainer} style={style}>
       <div
-        className={styles["accordion-title"]}
-        onClick={() => setIsActive(!isActive)}
+        className={styles["accordion-container"]}
+        onClick={() => handleClick()}
       >
-        <div style={{ display: "flex", alignItems: "center" }}>
-          <span style={{ marginRight: "10px" }}>{icon ? icon : null}</span>{" "}
-          {title}
-        </div>
-        <div style={{ marginLeft: "auto", marginTop: "auto" }}>
+        <span className={styles.icon}>{icon ? icon : null}</span>
+        <span style={isExpanded ? {} : {display: 'none'}}>{title}</span>
+        <div
+          className={`${styles.arrow} ${
+            isExpanded ? "" : styles["arrow-closed"]
+          }`}
+        >
           {isActive ? <IoIosArrowUp /> : <IoIosArrowDown />}
         </div>
       </div>
-      {isActive && (
-        <div className={styles["accordion-content"]}>{children}</div>
+
+      { (
+        <div className={styles['accordion-content']}
+        >
+          <span className={styles['menu-closed']} style={{display: 'block',marginLeft: '82px', color: 'red'}}>{title}</span>
+          {children}
+        </div>
       )}
     </div>
   );

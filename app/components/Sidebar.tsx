@@ -8,170 +8,92 @@ import {
   FaHome,
   FaServicestack,
 } from "react-icons/fa";
-import { FaGear, FaPerson } from "react-icons/fa6";
-import { Item } from "../types/types";
+import { IoSettingsSharp } from "react-icons/io5";
 import Accordion from "./Accordian";
+import { HiSparkles } from "react-icons/hi2";
+import SubMenu from "./SubMenu";
 
 const navList = [
   {
-    icon: <FaHome size={24} />,
+    icon: FaHome,
     title: "Home",
     path: "/",
-    subPaths: [
-      {
-        title: "Home",
-        path: "/",
-      },
-    ],
+    subPaths: [],
   },
   {
-    icon: <FaCalendar size={24} />,
+    icon: FaCalendar,
     title: "Appointments",
     path: "/appointments/calendar",
-    subPaths: [
-      {
-        title: "",
-        path: "/",
-      },
-    ],
+    subPaths: [],
   },
   {
-    icon: <FaBook size={24} />,
+    icon: FaBook,
     title: "Quotes",
     path: "/",
     subPaths: [
-      {
-        title: "Residential",
-        path: "/",
-      },
-      {
-        title: "Commercial",
-        path: "/",
-      },
+      { title: "Residential", path: "/quotes/residential" },
+      { title: "Commercial", path: "/quotes/commercial" },
     ],
   },
   {
-    icon: <FaFolder size={24} />,
+    icon: FaFolder,
     title: "Scheduling",
     path: "/",
-    subPaths: [
-      {
-        title: "",
-        path: "/",
-      },
-    ],
+    subPaths: [],
   },
   {
-    icon: <FaPerson size={24} />,
-    title: "Customers",
-    path: "/",
-    subPaths: [
-      {
-        title: "",
-        path: "/",
-      },
-    ],
-  },
-  {
-    icon: <FaPerson size={24} />,
-    title: "Employees",
-    path: "/",
-    subPaths: [
-      {
-        title: "",
-        path: "/",
-      },
-    ],
-  },
-  {
-    icon: <FaServicestack size={24} />,
+    icon: FaServicestack,
     title: "Services",
-    path: "/",
-    subPaths: [
-      {
-        title: "",
-        path: "/",
-      },
-    ],
+    path: "/services",
+    subPaths: [],
   },
   {
-    icon: <FaHome size={24} />,
+    icon: FaHome,
     title: "Inventory",
-    path: "/",
-    subPaths: [
-      {
-        title: "",
-        path: "/",
-      },
-    ],
+    path: "/inventory",
+    subPaths: [],
   },
   {
-    icon: <FaHome size={24} />,
+    icon: FaHome,
     title: "Booking",
-    path: "/",
+    path: "/booking",
     subPaths: [
-      {
-        title: "",
-        path: "/",
-      },
+      { title: "Residential", path: "/quotes/residential" },
+      { title: "Commercial", path: "/quotes/commercial" },
     ],
   },
   {
-    icon: <FaHome size={24} />,
-    title: "Leads",
-    path: "/",
-    subPaths: [
-      {
-        title: "",
-        path: "/",
-      },
-    ],
-  },
-  {
-    icon: <FaGear size={24} />,
+    icon: IoSettingsSharp,
     title: "Settings",
-    path: "/",
-    subPaths: [
-      {
-        title: "",
-        path: "/",
-      },
-    ],
+    path: "/settings",
+    subPaths: [],
   },
 ];
 
-const Sidebar = () => {
+const Sidebar = ({ isExpanded }) => {
   return (
-    <div className={styles.container}>
-      {navList.map((item: Item, index: number) => {
-        return (
-          <div key={index} style={{ width: "100%" }}>
-            <Accordion title={item.title} icon={item.icon}>
-              {item.subPaths.map((subItem: any, idx: number) => {
-                return (
-                  <Link
-                    key={idx}
-                    style={{
-                      display: "flex",
-                      flexDirection: "row",
-                      width: "100%",
-                      height: "2.2rem",
-                      alignItems: "center",
-                      color: "#FFFFFF",
-                      textDecorationLine: "none",
-                      paddingLeft: "10px",
-                    }}
-                    href={item.path}
-                  >
-                    {subItem.title}
-                  </Link>
-                );
-              })}
-            </Accordion>
-          </div>
-        );
-      })}
-    </div>
+    <aside className={`${styles.sidebar} ${isExpanded ? "" : styles.close}`}>
+      <div className={styles.logo_details}>
+        <span className={styles.logo}>
+          <HiSparkles />
+        </span>
+        <span className={styles.logo_name}>Shine Masters</span>
+      </div>
+      <ul className={`${styles.nav_links} ${styles.close}`}>
+        {navList.map(({ title, icon: Icon, path, subPaths }) => {
+          return (
+            <SubMenu
+              key={title}
+              title={title}
+              Icon={Icon}
+              path={path}
+              subPaths={subPaths}
+              isExpanded={isExpanded}
+            />
+          );
+        })}
+      </ul>
+    </aside>
   );
 };
 

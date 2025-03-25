@@ -1,4 +1,5 @@
 import { ReactNode } from "react";
+import { IconType } from "react-icons";
 
 export type DashBoardCardProps = {
   size: string;
@@ -50,7 +51,7 @@ export type AppointmentInfoProps = {
 };
 
 export type Item = {
-  icon?: ReactNode;
+  icon?: IconType;
   title: string;
   path: string;
   subPaths: any[];
@@ -87,6 +88,7 @@ export type AccordianProps = {
   step?: number;
   icon?: ReactNode;
   style?: any;
+  isExpanded?: any;
 };
 
 export type DatetimePickerProps = {
