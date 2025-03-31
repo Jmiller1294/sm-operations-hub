@@ -91,7 +91,6 @@ const WeekPage = () => {
 
   const filteredAppointments = useMemo(() => {
     return getDaysOfWeek()?.reduce((acc: any, day: Date) => {
-      console.log("acc:", acc, "day:", day);
       acc[format(day, "MMMM dd, yyyy")] = state.appointments?.filter(
         (app: Appointment) => app.date === format(day, "MMMM dd, yyyy")
       );
@@ -130,37 +129,39 @@ const WeekPage = () => {
           }
         })}
       </div>
-      {getDaysOfWeek().map((day: Date, index: number) => {
-        const appointments =
-          filteredAppointments?.[format(day, "MMMM dd, yyyy")] || [];
-        return (
-          <div className={styles["small-col"]} key={index}>
-            {appointments?.map((appointment: Appointment, idx: number) => {
-              return (
-                <div
-                  key={idx}
-                  className={styles.appointment}
-                  style={{
-                    top: `${getStartPosition(appointment.startTime)}px`,
-                    height: getTimeSlotHeight(appointment),
-                  }}
-                  onClick={() => console.log("clicked")}
-                >
-                  <div className={styles.appointmentInfoCon}>
-                    {appointment.firstName} {appointment.lastName}
+      <div style={{ display: "flex", flexDirection: "row", flex: 10 }}>
+        {getDaysOfWeek().map((day: Date, index: number) => {
+          const appointments =
+            filteredAppointments?.[format(day, "MMMM dd, yyyy")] || [];
+          return (
+            <div className={styles["small-col"]} key={index}>
+              {appointments?.map((appointment: Appointment, idx: number) => {
+                return (
+                  <div
+                    key={idx}
+                    className={styles.appointment}
+                    style={{
+                      top: `${getStartPosition(appointment.startTime)}px`,
+                      height: getTimeSlotHeight(appointment),
+                    }}
+                    onClick={() => console.log("clicked")}
+                  >
+                    <div className={styles.appointmentInfoCon}>
+                      {appointment.firstName} {appointment.lastName}
+                    </div>
+                    <div>
+                      {appointment.startTime} - {appointment.endTime}
+                    </div>
                   </div>
-                  <div>
-                    {appointment.startTime} - {appointment.endTime}
-                  </div>
-                </div>
-              );
-            })}
-            {numbers.map((index) => (
-              <div key={index} className={styles.row}></div>
-            ))}
-          </div>
-        );
-      })}
+                );
+              })}
+              {numbers.map((index) => (
+                <div key={index} className={styles.row}></div>
+              ))}
+            </div>
+          );
+        })}
+      </div>
     </div>
   );
 };

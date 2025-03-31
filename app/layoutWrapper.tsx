@@ -23,12 +23,12 @@ export default function LayoutWrapper({
       <div className={`sidebar-container ${isExpanded ? "" : "closed"}`}>
         <Sidebar isExpanded={isExpanded} />
       </div>
-      <div className={`main-container ${isExpanded ? "" : "closed"}`}>
+      <main className={`main-container ${isExpanded ? "" : "closed"}`}>
         <Header onToggle={toggleContainer} />
         <AppProvider>
           <AppointmentsProvider>{children}</AppointmentsProvider>
         </AppProvider>
-      </div>
+      </main>
     </div>
   );
 };

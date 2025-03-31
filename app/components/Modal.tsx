@@ -1,21 +1,18 @@
 "use client";
-import React, { useContext, useEffect } from "react";
+import React, { useContext } from "react";
 import styles from "../styles/Modal.module.css";
 import { Context as AppContext } from "../context/appContext";
 
 const Modal = () => {
   const { closeModal, state } = useContext(AppContext);
-  useEffect(() => {
-    console.log(state);
-  }, [state]);
 
   return (
     <div>
       <div
-        className={
-          state.isModalOpen
-            ? `${styles["modal-overlay"]} ${styles["open-overlay"]}`
-            : styles["modal-overlay"]
+        className={`${styles["open-overlay"]} 
+          ${state.isModalOpen
+            ? styles["modal-overlay"]
+            : null}`
         }
         onClick={closeModal}
       ></div>

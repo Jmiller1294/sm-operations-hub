@@ -7,7 +7,7 @@ const AppointmentsPageLayout = ({ children }: LayoutProps) => {
   return (
     <>
       <Header />
-      <main>{children}</main>
+      {children}
       <Modal />
     </>
   );

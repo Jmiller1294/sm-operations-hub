@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 "use client";
-import React, { useCallback, useContext, useEffect, useState } from "react";
+import React, { useCallback, useContext, useEffect, useRef, useState } from "react";
 import { useRouter, useSearchParams, usePathname } from "next/navigation";
 import { FaList, FaRegCalendarAlt } from "react-icons/fa";
 import {
@@ -23,6 +23,7 @@ import styles from "../../styles/AppointmentsPage.module.css";
 import { Context } from "@/app/context/appContext";
 import NewAppointmentForm from "@/app/components/forms/NewAppointmentForm";
 import Link from "next/link";
+import CalendarHeader from "../calendar/components/CalendarHeader";
 
 const Header = () => {
   const { state, openModal, closeModal } = useContext(Context);
@@ -33,6 +34,8 @@ const Header = () => {
   const [mounted, setMounted] = useState(false);
   const [CalendarTypeIsClicked, setCalendarTypeIsClicked] = useState(false);
   const [settingsIsClicked, setSettingsIsClicked] = useState(false);
+  const calendarTypeRef = useRef<HTMLDivElement>(null);
+  const settingsRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     setMounted(true);
@@ -140,6 +143,29 @@ const Header = () => {
     }
   };
 
+    useEffect(() => {
+      const handleClick = (event: MouseEvent) => {
+        if (
+          (calendarTypeRef.current &&
+            calendarTypeRef.current.contains(event.target as Node)) ||
+          (settingsRef.current &&
+            settingsRef.current.contains(event.target as Node))
+        ) {
+          
+          
+        } else {
+          setSettingsIsClicked(false);
+          setCalendarTypeIsClicked(false);
+        }
+      };
+
+      document.addEventListener("mousedown", handleClick);
+
+      return () => {
+        document.removeEventListener("mousedown", handleClick);
+      };
+    }, []);
+
   return (
     <div className={styles.header}>
       <div className={styles.row}>
@@ -192,7 +218,7 @@ const Header = () => {
           Today
         </button>
         <div className={styles.buttonsContainer}>
-          <div className={styles.dropdown}>
+          <div className={styles.dropdown} ref={settingsRef}>
             <button
               className={styles["settings-btn"]}
               onClick={handleSettingsClick}
@@ -207,7 +233,7 @@ const Header = () => {
               <Link href={"/appointments/calendar/day"}>Availability</Link>
             </div>
           </div>
-          <div className={styles.dropdown}>
+          <div className={styles.dropdown} ref={calendarTypeRef}>
             <button
               className={styles.dropbtn}
               onClick={handleCalendarTypeClick}
@@ -232,6 +258,7 @@ const Header = () => {
           </button>
         </div>
       </div>
+      <CalendarHeader />
     </div>
   );
 };

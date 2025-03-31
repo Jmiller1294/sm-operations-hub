@@ -1,8 +1,8 @@
 .modal-overlay{
   position: fixed;
   top: 0;
-  right: -810px;
-  width: 35.6%;
+  left: 0;
+  width: 55%;
   height: 100vh;
   z-index: 1000;
   background-color: transparent;
@@ -13,7 +13,7 @@
   position: fixed;
   top: 0;
   right: -810px; /* Initially hidden off-screen */
-  width: 50%;
+  width: 45%;
   height: 100vh;
   background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
   transition: right 0.3s ease-in-out; /* Smooth transition for opening/closing */

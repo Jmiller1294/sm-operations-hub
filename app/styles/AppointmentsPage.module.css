@@ -7,8 +7,8 @@
 
 .header {
   position: fixed;
-  top: 68px; /* Position the navbar at the top of the page */
-  width: 85vw; /* Full width */
+  top: 60px;
+  width: inherit;
   height: fit-content;
   z-index: 10;
   background: #ffffff;
@@ -23,6 +23,7 @@
   width: 100%;
   box-sizing: border-box;
   align-items: center;
+  padding: 0 10px 0 10px;
 }
 
 .toggleContainer {
@@ -109,13 +110,15 @@
   justify-content: center;
   align-items: center;
   height: 34px;
-  width: 44%;
+  width: 50%;
   border-radius: 25px;
   font-size: 0.9rem;
   font-weight: 550;
   border: none;
-  box-sizing: border-box;
   cursor: pointer;
+  padding-left: 8px;
+  padding-right: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
 }
 
 .newAppointmentButton:hover {
@@ -129,7 +132,7 @@
   align-items: center;
   margin-left: auto;
   height: 40px;
-  width: 30%;
+  width: 32%;
   font-size: 0.9rem;
   font-weight: 550;
   box-sizing: border-box;
@@ -321,10 +324,12 @@
   width: 40px;
   height: 40px;
   border-radius: 50%;
+  cursor: pointer;
 }
 
 .settings-btn:hover {
   background: #efefef;
+  
 }
 
 /* The container <div> - needed to position the dropdown content */
@@ -340,6 +345,7 @@
   background-color: #f1f1f1;
   min-width: 160px;
   box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  border-radius: 6px;
 }
 
 /* Links inside the dropdown */

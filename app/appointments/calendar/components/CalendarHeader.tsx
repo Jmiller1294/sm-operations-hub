@@ -40,66 +40,61 @@ const CalendarHeader = () => {
 
   const renderView = () => {
     switch (pathname) {
-      case '/appointments/calendar/day':
-        return(
+      case "/appointments/calendar/day":
+        return (
           <div className={styles.employeeInfoCon}>
-            <div className={styles.timeTextCon}>
-              <span>Time</span>
-            </div>
+            <div className={styles.timeTextCon}>Time</div>
             <div className={styles.employeesCon}>
-              {state.employees?.map((employee:Employee, index: number) => (
-                <div 
-                  key={index}
-                  className={styles.employeeCon}
-                >
+              {state.employees?.map((employee: Employee, index: number) => (
+                <div key={index} className={styles.employeeCon}>
                   {employee.name}
                 </div>
               ))}
             </div>
           </div>
         );
-      case '/appointments/calendar/week':
-        return(
+      case "/appointments/calendar/week":
+        return (
           <div className={styles.employeeInfoCon}>
             <div className={styles.timeTextCon}>
               <span>Time</span>
             </div>
             <div className={styles.DaysCon}>
-              {getDaysOfWeek().map((day:Date, index: number) => (
-                <div 
+              {getDaysOfWeek().map((day: Date, index: number) => (
+                <div
                   key={index}
-                  className={
-                    `${styles.DayCon} 
-                     ${format(day, 'EEEE, MMM d') === format(date, 'EEEE, MMM d') 
-                     ? styles.borderBottom : null}
+                  className={`${styles.DayCon} 
+                     ${
+                       format(day, "EEEE, MMM d") ===
+                       format(date, "EEEE, MMM d")
+                         ? styles.borderBottom
+                         : null
+                     }
                     `}
                 >
-                  {format(day, 'EEEE, MMM d')}
+                  {format(day, "EEEE, MMM d")}
                 </div>
               ))}
             </div>
-          </div> 
+          </div>
         );
-      case '/appointments/calendar/month': 
+      case "/appointments/calendar/month":
         return null;
-      default:
-        return(
+      case "/appointments/calendar":
+        return (
           <div className={styles.employeeInfoCon}>
-            <div className={styles.timeTextCon}>
-              <span>Time</span>
-            </div>
+            <div className={styles.timeTextCon}>Time</div>
             <div className={styles.employeesCon}>
-              {state.employees?.map((employee:Employee, index: number) => (
-                <div 
-                  key={index}
-                  className={styles.employeeCon}
-                >
+              {state.employees?.map((employee: Employee, index: number) => (
+                <div key={index} className={styles.employeeCon}>
                   {employee.name}
                 </div>
               ))}
             </div>
           </div>
         );
+      default:
+        return null;
     }
   };
   return <div>{renderView()}</div>;

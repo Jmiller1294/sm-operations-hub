@@ -58,7 +58,7 @@ const DayViewCalendar = () => {
   const scrollToTime = () => {
     const currentTime = date;
     const minutesSinceMidnight =
-      getHours(currentTime) * 60 + 60 + getMinutes(currentTime);
+      getHours(currentTime) * 60 + 240 + getMinutes(currentTime);
     setDotHeight(minutesSinceMidnight - 5);
     setLineHeight(minutesSinceMidnight);
     elementRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
@@ -117,41 +117,43 @@ const DayViewCalendar = () => {
           }
         })}
       </div>
-      {state.employees?.map((employee: Employee, idx: number) => {
-        const employeeAppointments =
-          filteredAppointments?.[employee.name] || [];
+      <div style={{ display: "flex", flexDirection: "row", flex: 10 }}>
+        {state.employees?.map((employee: Employee, idx: number) => {
+          const employeeAppointments =
+            filteredAppointments?.[employee.name] || [];
 
-        return (
-          <div className={styles.col} key={idx}>
-            {employeeAppointments.map((appointment: Appointment) => (
-              <div
-                key={appointment.id}
-                className={styles.appointment}
-                style={{
-                  top: `${getStartPosition(appointment.startTime)}px`,
-                  height: getTimeSlotHeight(appointment),
-                }}
-                onClick={() => handleModalOpen(appointment.id)}
-              >
-                <div className={styles.appointmentInfoCon}>
-                  <span className={styles.appointmentName}>
-                    {appointment.firstName} {appointment.lastName}: &nbsp;
-                  </span>
-                  <span className={styles.appointmentType}>
-                    {appointment.type}
-                  </span>
+          return (
+            <div className={styles.col} key={idx}>
+              {employeeAppointments.map((appointment: Appointment) => (
+                <div
+                  key={appointment.id}
+                  className={styles.appointment}
+                  style={{
+                    top: `${getStartPosition(appointment.startTime)}px`,
+                    height: getTimeSlotHeight(appointment),
+                  }}
+                  onClick={() => handleModalOpen(appointment.id)}
+                >
+                  <div className={styles.appointmentInfoCon}>
+                    <span className={styles.appointmentName}>
+                      {appointment.firstName} {appointment.lastName}: &nbsp;
+                    </span>
+                    <span className={styles.appointmentType}>
+                      {appointment.type}
+                    </span>
+                  </div>
+                  <div>
+                    {appointment.startTime} - {appointment.endTime}
+                  </div>
                 </div>
-                <div>
-                  {appointment.startTime} - {appointment.endTime}
-                </div>
-              </div>
-            ))}
-            {numbers.map((index) => (
-              <div key={index} className={styles.row}></div>
-            ))}
-          </div>
-        );
-      })}
+              ))}
+              {numbers.map((index) => (
+                <div key={index} className={styles.row}></div>
+              ))}
+            </div>
+          );
+        })}
+      </div>
     </div>
   );
 };
