@@ -1,17 +1,27 @@
 "use client";
 import Link from "next/link";
+import { usePathname } from 'next/navigation';
 import React, { useEffect, useState } from "react";
 import styles from "../styles/Sidebar.module.css";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 
 const SubMenu = ({ title, Icon, subPaths, path, isExpanded }) => {
   const [isActive, setIsActive] = useState(false);
+  const [isCLicked, setisClciked] = useState(false);
+  const pathname = usePathname();
 
   useEffect(() => {
+    console.log(pathname)
     if (!isExpanded) {
       setIsActive(false);
     }
   }, [isExpanded]);
+
+  useEffect(() => {
+    console.log(pathname, path);
+
+    
+  }, [pathname]);
 
   const handleClick = () => {
     setIsActive(!isActive);
@@ -19,7 +29,7 @@ const SubMenu = ({ title, Icon, subPaths, path, isExpanded }) => {
 
   return (
     <li>
-      <div className={styles.icon_link}>
+      <div className={`${styles.icon_link} ${pathname === path ? styles.active : null}`}>
         <Link key={title} className={styles.link} href={path}>
           <Icon className={styles.link_icon} size={24} />
           <span className={styles.link_name}>{title}</span>

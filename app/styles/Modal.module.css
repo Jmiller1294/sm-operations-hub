@@ -12,7 +12,7 @@
 .side-modal {
   position: fixed;
   top: 0;
-  right: -810px; /* Initially hidden off-screen */
+  right: -1810px; /* Initially hidden off-screen */
   width: 45%;
   height: 100vh;
   background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
@@ -23,6 +23,7 @@
 
 .open{
   right: 0; /* Slide in when open */
+  
 }
 
 .open-overlay{

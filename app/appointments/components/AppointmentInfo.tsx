@@ -5,6 +5,7 @@ import AppointmentDetails from "./AppointmentDetails";
 import RescheduleAppointmentForm from "@/app/components/forms/RescheduleAppointmentForm";
 import EditAppointmentForm from "@/app/components/forms/EditAppointmentForm";
 
+
 const AppointmentInfo = ({ data, onClose }: AppointmentInfoProps) => {
   const [view, setView] = useState("details");
 

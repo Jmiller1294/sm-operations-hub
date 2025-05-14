@@ -5,7 +5,8 @@
   height: 100vh; 
   width: 100%;
   overflow-y: scroll;
-  padding: 80px 20px 0 20px;
+  padding-top: 90px;
+  padding-left: 2%;
 }
 
 .row{
@@ -15,5 +16,4 @@
   height: auto; 
   width: 100%;
   box-sizing: border-box;
-  margin-bottom: 20px;
 }

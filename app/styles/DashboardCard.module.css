@@ -1,6 +1,6 @@
 .card{ 
   display: flex;
-  height: 80px;
+  height: 28vh;
   width: 23.5%;
   background: #ffffff; 
   border-radius: 8px; 
@@ -8,19 +8,21 @@
   padding: 20px; 
   transition: transform 0.3s ease, box-shadow 0.3s ease; 
   font-size: 1.2vw;
+  margin-bottom: 20px;
+  margin-right: 20px;
 }
 
 .medium{
-  height: 220px;
+  height: 28vh;
   width: 25%;
 }
 
 .large{ 
-  height: 220px;
+  height: 28vh;
   width: 35.5%;
 }
 
 .xlarge{ 
-  height: 220px;
+  height: 28vh;
   width: 49%;
 }

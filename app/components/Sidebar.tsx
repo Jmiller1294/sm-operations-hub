@@ -20,13 +20,13 @@ const navList = [
   {
     icon: FaCalendar,
     title: "Appointments",
-    path: "/appointments/calendar",
+    path: "/appointments",
     subPaths: [],
   },
   {
     icon: FaBook,
     title: "Quotes",
-    path: "/",
+    path: "/quotes",
     subPaths: [
       { title: "Residential", path: "/quotes/residential" },
       { title: "Commercial", path: "/quotes/commercial" },
@@ -35,7 +35,7 @@ const navList = [
   {
     icon: FaFolder,
     title: "Scheduling",
-    path: "/",
+    path: "/scheduling",
     subPaths: [],
   },
   {

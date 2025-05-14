@@ -27,7 +27,7 @@ const EditAppointmentForm = ({
   };
 
   return (
-    <div className={styles.editInfoCon}>
+    <div className={styles.form_container}>
       <div className={styles.buttonCon}>
         <button onClick={onClose} className={styles["close-button"]}>
           Close
@@ -39,7 +39,10 @@ const EditAppointmentForm = ({
           >
             Save
           </button>
-          <button className={styles.button} onClick={() => onClick("Cancel")}>
+          <button
+            className={`${styles.button} ${styles.padding}`}
+            onClick={() => onClick("Cancel")}
+          >
             Cancel Edit
           </button>
         </div>

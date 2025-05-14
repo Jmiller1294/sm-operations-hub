@@ -1,9 +1,9 @@
 .container {
   position: fixed;
   display: flex;
-  height: 9vh;
+  height: 70px;
   width: 100%;
-  background-color: #ffffff;
+  background-color: hsl(0, 0%, 100%);
   align-items: center;
   border-bottom: 1px solid #e7e7e7;
   padding-left: 10px;
