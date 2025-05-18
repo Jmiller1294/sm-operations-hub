@@ -1,6 +1,13 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 "use client";
-import React, { ReactNode, useCallback, useContext, useEffect, useRef, useState } from "react";
+import React, {
+  ReactNode,
+  useCallback,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import { useRouter, useSearchParams, usePathname } from "next/navigation";
 import { FaList, FaRegCalendarAlt } from "react-icons/fa";
 import {
@@ -20,14 +27,13 @@ import {
   format,
 } from "date-fns";
 import styles from "../../styles/AppointmentsPage.module.css";
-import { Context } from "@/app/context/appContext";
 import NewAppointmentForm from "@/app/components/forms/NewAppointmentForm";
 import Link from "next/link";
 import CalendarHeader from "../calendar/components/CalendarHeader";
 import AvailabilityForm from "@/app/components/forms/AvailabilityForm";
+import { useModal } from "@/app/store/modal-context";
 
 const Header = () => {
-  const { state, openModal, closeModal } = useContext(Context);
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -37,6 +43,7 @@ const Header = () => {
   const [settingsIsClicked, setSettingsIsClicked] = useState(false);
   const calendarTypeRef = useRef<HTMLDivElement>(null);
   const settingsRef = useRef<HTMLDivElement>(null);
+  const { openModal, closeModal } = useModal();
 
   useEffect(() => {
     setMounted(true);
@@ -108,16 +115,12 @@ const Header = () => {
   };
 
   const handleModalOpen = (viewType: string) => {
-    if(viewType === 'new appointment') {
-      openModal(<NewAppointmentForm onClose={handleModalClose} />);
+    if (viewType === "new appointment") {
+      openModal(<NewAppointmentForm onClose={closeModal} />);
     }
-    if(viewType === 'availability') {
-      openModal(<AvailabilityForm onClose={handleModalClose} />);
+    if (viewType === "availability") {
+      openModal(<AvailabilityForm onClose={closeModal} />);
     }
-  };
-
-  const handleModalClose = () => {
-    closeModal();
   };
 
   const handleCalendarTypeClick = () => {
@@ -157,8 +160,6 @@ const Header = () => {
         (settingsRef.current &&
           settingsRef.current.contains(event.target as Node))
       ) {
-        
-        
       } else {
         setSettingsIsClicked(false);
         setCalendarTypeIsClicked(false);
@@ -224,7 +225,7 @@ const Header = () => {
           Today
         </button>
         <div className={styles.buttonsContainer}>
-          <div className={styles['settings-dropdown']} ref={settingsRef}>
+          <div className={styles["settings-dropdown"]} ref={settingsRef}>
             <button
               className={styles["settings-btn"]}
               onClick={handleSettingsClick}
@@ -238,11 +239,16 @@ const Header = () => {
             >
               <button
                 className={styles.availabilitybttn}
-                onClick={() => handleModalOpen('availability')}
-              >Availability</button>
+                onClick={() => handleModalOpen("availability")}
+              >
+                Availability
+              </button>
             </div>
           </div>
-          <div className={styles['calendar-type-dropdown']} ref={calendarTypeRef}>
+          <div
+            className={styles["calendar-type-dropdown"]}
+            ref={calendarTypeRef}
+          >
             <button
               className={styles.dropbtn}
               onClick={handleCalendarTypeClick}
@@ -261,7 +267,7 @@ const Header = () => {
           </div>
           <button
             className={styles.newAppointmentButton}
-            onClick={() => handleModalOpen('new appointment')}
+            onClick={() => handleModalOpen("new appointment")}
           >
             + New Appointment
           </button>

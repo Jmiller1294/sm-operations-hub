@@ -1,10 +1,7 @@
 "use client";
-
 import { useState } from "react";
 import Header from "./components/Header";
 import Sidebar from "./components/Sidebar";
-import { Provider as AppointmentsProvider } from "./context/appointmentsContext";
-import { Provider as AppProvider } from "./context/appContext";
 import "./styles/globals.css";
 
 export default function LayoutWrapper({
@@ -25,10 +22,8 @@ export default function LayoutWrapper({
       </div>
       <main className={`main-container ${isExpanded ? "" : "closed"}`}>
         <Header onToggle={toggleContainer} />
-        <AppProvider>
-          <AppointmentsProvider>{children}</AppointmentsProvider>
-        </AppProvider>
+        {children}
       </main>
     </div>
   );
-};
+}

@@ -1,7 +1,7 @@
 "use client";
 import React, { useContext } from "react";
 import styles from "../styles/Modal.module.css";
-import { Context as AppContext } from "../context/appContext";
+import { Context as AppContext } from "../store/appContext";
 
 const Modal = () => {
   const { closeModal, state } = useContext(AppContext);
@@ -10,10 +10,7 @@ const Modal = () => {
     <div>
       <div
         className={`${styles["open-overlay"]} 
-          ${state.isModalOpen
-            ? styles["modal-overlay"]
-            : null}`
-        }
+          ${state.isModalOpen ? styles["modal-overlay"] : null}`}
         onClick={closeModal}
       ></div>
       <div

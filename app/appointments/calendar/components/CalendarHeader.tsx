@@ -1,39 +1,28 @@
-'use client'
-import React, { useContext, useEffect } from 'react';
-import styles from '../../../styles/Calendar.module.css';
-import { Employee } from '@/app/types/types';
-import { 
-  addDays, 
-  eachDayOfInterval, 
-  format, 
-  startOfWeek 
-} from 'date-fns';
-import { Context } from '@/app/context/appointmentsContext';
-import { usePathname, useSearchParams } from 'next/navigation';
-
-
+"use client";
+import React, { useContext, useEffect } from "react";
+import styles from "../../../styles/Calendar.module.css";
+import { Employee } from "@/app/types/types";
+import { addDays, eachDayOfInterval, format, startOfWeek } from "date-fns";
+import { usePathname, useSearchParams } from "next/navigation";
+import AppointmentsContext from "@/app/store/appointments-context";
 
 const CalendarHeader = () => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const date = Date.now();
-  const { state, getEmployees } = useContext(Context);
   const pathname = usePathname();
   const searchParams = useSearchParams();
-  
-
-  useEffect(() => {
-    if (getEmployees) getEmployees();
-  }, []);
+    const { employees } =
+      useContext(AppointmentsContext);
 
   const getDaysOfWeek = () => {
-    let currDate:string | number = date;
-    if(searchParams.get('date')) {
-      currDate = searchParams.get('date') as string;
+    let currDate: string | number = date;
+    if (searchParams.get("date")) {
+      currDate = searchParams.get("date") as string;
     }
     const weekStart = startOfWeek(currDate, { weekStartsOn: 1 });
     const weekDates = eachDayOfInterval({
       start: weekStart,
-      end: addDays(weekStart, 6)
+      end: addDays(weekStart, 6),
     });
     return [...weekDates];
   };
@@ -45,7 +34,7 @@ const CalendarHeader = () => {
           <div className={styles.employeeInfoCon}>
             <div className={styles.timeTextCon}>Time</div>
             <div className={styles.employeesCon}>
-              {state.employees?.map((employee: Employee, index: number) => (
+              {employees?.map((employee: Employee, index: number) => (
                 <div key={index} className={styles.employeeCon}>
                   {employee.name}
                 </div>
@@ -80,12 +69,12 @@ const CalendarHeader = () => {
         );
       case "/appointments/calendar/month":
         return null;
-      case "/appointments/calendar":
+      case "/appointments":
         return (
           <div className={styles.employeeInfoCon}>
             <div className={styles.timeTextCon}>Time</div>
             <div className={styles.employeesCon}>
-              {state.employees?.map((employee: Employee, index: number) => (
+              {employees?.map((employee: Employee, index: number) => (
                 <div key={index} className={styles.employeeCon}>
                   {employee.name}
                 </div>
@@ -98,6 +87,6 @@ const CalendarHeader = () => {
     }
   };
   return <div>{renderView()}</div>;
-}
+};
 
-export default CalendarHeader
+export default CalendarHeader;

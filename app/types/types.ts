@@ -7,32 +7,42 @@ export type DashBoardCardProps = {
 };
 
 export type Appointment = {
-  id: number;
-  firstName: string;
-  lastName: string;
+  id: 1;
+  first_name: string;
+  last_name: string;
   phone: string;
-  address: string;
   email: string;
   date: string;
-  startTime: string;
-  endTime: string;
-  startDateTime: string;
-  endDateTime: string;
-  dateCreated: string;
-  price: string;
+  start_time: string;
+  end_time: string;
+  date_created: string;
+  datetime: string;
+  price: number;
   paid: string;
-  amountPaid: string;
+  amount_paid: number;
   type: string;
-  notes: string;
-  appointmentTypeID: number;
+  appointment_type_id: number;
+  add_on_ids: number[];
+  class_id: number;
   duration: number;
   calendar: string;
-  calendarID: number;
-  canClientCancel: false;
-  canClientReschedule: false;
+  calendar_id: number;
+  can_client_cancel: boolean;
+  can_client_reschedule: boolean;
   location: string;
+  confirmation_page: string;
+  forms_text: string
+  notes: string;
   timezone: string;
 };
+
+export type Availability = {
+  id: number,
+  day: string,
+  active: boolean,
+  start_time: string,
+  end_time: string
+}
 
 export type AccordionItem = {
   title: string;

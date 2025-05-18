@@ -1,5 +1,3 @@
-"use client";
-import { createDataContext } from "./createDataContext";
 
 const appReducer = (
   state: { isModalOpen: boolean; modalContent: React.ReactNode | null },
@@ -29,8 +27,3 @@ const closeModal = (dispatch: (action: {}) => void) => {
   };
 };
 
-export const { Context, Provider } = createDataContext(
-  appReducer,
-  { openModal, closeModal },
-  { isModalOpen: false, modalContent: null }
-);

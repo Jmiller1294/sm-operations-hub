@@ -2,11 +2,11 @@
 import { useEffect, useState, useRef, useContext, useMemo } from "react";
 import styles from "../../../styles/Calendar.module.css";
 import { format, getHours, getMinutes, parse } from "date-fns";
-import { Appointment, Employee } from "@/app/types/types";
-import { Context as AppointmentContext } from "@/app/context/appointmentsContext";
-import { Context as AppContext } from "@/app/context/appContext";
+import { Appointment, Availability, Employee } from "@/app/types/types";
+import AppointmentsContext from "@/app/store/appointments-context";
 import { useSearchParams } from "next/navigation";
 import AppointmentInfo from "../../components/AppointmentInfo";
+import { useModal } from "@/app/store/modal-context";
 
 const DayViewCalendar = () => {
   const date = useMemo(() => new Date(), []);
@@ -14,15 +14,17 @@ const DayViewCalendar = () => {
   const [dotHeight, setDotHeight] = useState(0);
   const numbers = Array.from(Array(25).keys());
   const elementRef = useRef<HTMLDivElement>(null);
-  const { state, getEmployees, getAppointments } =
-    useContext(AppointmentContext);
-  const { openModal, closeModal } = useContext(AppContext);
+  const { appointments, availability, employees } =
+    useContext(AppointmentsContext);
   const searchParams = useSearchParams();
+  const currDate = searchParams.get("date") as string;
+  const fullDayName = format(currDate, "EEEE");
+  const day = availability.find((val) => val.day === fullDayName);
+  const { openModal, closeModal } = useModal();
 
   useEffect(() => {
-    getEmployees();
-    getAppointments();
     scrollToTime();
+    console.log(appointments)
   }, []);
 
   useEffect(() => {
@@ -44,15 +46,8 @@ const DayViewCalendar = () => {
 
   const handleModalOpen = (id: number) => {
     openModal(
-      <AppointmentInfo
-        data={state.appointments[id - 1]}
-        onClose={handleModalClose}
-      />
+      <AppointmentInfo data={appointments[id - 1]} onClose={closeModal} />
     );
-  };
-
-  const handleModalClose = () => {
-    closeModal();
   };
 
   const scrollToTime = () => {
@@ -65,23 +60,26 @@ const DayViewCalendar = () => {
   };
 
   const getStartPosition = (time: string) => {
-    const parsedTime = parse(time, "hh:mm a", date);
-    return getHours(parsedTime) * 60 + 60 + getMinutes(parsedTime);
+    const [hour, minutes] = day?.start_time?.split(":") as string[];
+    return parseInt(hour as string) * 60 + 60 + parseInt(minutes);
   };
 
   const getTimeSlotHeight = (appointment: Appointment) => {
-    const { duration, startDateTime, endDateTime } = appointment;
-    if (getHours(endDateTime) < getHours(startDateTime)) {
+    const { duration, start_time, date_time } = appointment;
+    console.log(getHours(start_date_time), getHours(end_date_time));
+    if (getHours(end_date_time) < getHours(start_date_time)) {
       return (
-        duration - (getHours(endDateTime) * 60 + getMinutes(endDateTime)) - 5
+        duration -
+        (getHours(end_date_time) * 60 + getMinutes(end_date_time)) -
+        5
       );
     }
-    return duration - 5;
+    return (60*8) - 5;
   };
 
   const filteredAppointments = useMemo(() => {
-    return state.employees?.reduce((acc: any, employee: Employee) => {
-      acc[employee.name] = state.appointments?.filter(
+    return employees?.reduce((acc: any, employee: Employee) => {
+      acc[employee.name] = appointments?.filter(
         (app: Appointment) =>
           app.calendar === employee.name &&
           app.date ===
@@ -94,7 +92,7 @@ const DayViewCalendar = () => {
       );
       return acc;
     }, {} as Record<string, Appointment[]>);
-  }, [state.employees, state.appointments, searchParams, date]);
+  }, [employees, appointments, searchParams, date]);
 
   return (
     <div className={styles.calendarContainer}>
@@ -118,37 +116,63 @@ const DayViewCalendar = () => {
         })}
       </div>
       <div style={{ display: "flex", flexDirection: "row", flex: 10 }}>
-        {state.employees?.map((employee: Employee, idx: number) => {
+        {employees?.map((employee: Employee, idx: number) => {
           const employeeAppointments =
             filteredAppointments?.[employee.name] || [];
 
           return (
             <div className={styles.col} key={idx}>
-              {employeeAppointments.map((appointment: Appointment) => (
-                <div
-                  key={appointment.id}
-                  className={styles.appointment}
-                  style={{
-                    top: `${getStartPosition(appointment.startTime)}px`,
-                    height: getTimeSlotHeight(appointment),
-                  }}
-                  onClick={() => handleModalOpen(appointment.id)}
-                >
-                  <div className={styles.appointmentInfoCon}>
-                    <span className={styles.appointmentName}>
-                      {appointment.firstName} {appointment.lastName}: &nbsp;
-                    </span>
-                    <span className={styles.appointmentType}>
-                      {appointment.type}
-                    </span>
-                  </div>
-                  <div>
-                    {appointment.startTime} - {appointment.endTime}
-                  </div>
-                </div>
-              ))}
+              {employeeAppointments.map((appointment: Appointment) => {
+                console.log(
+                  parseInt(appointment.end_time?.split(":")[0] as string),
+                  parseInt(day?.end_time?.split(":")[0] as string)
+                );
+                if (
+                  parseInt(appointment.start_time?.split(":")[0] as string) >=
+                    parseInt(day?.start_time?.split(":")[0] as string) &&
+                  parseInt(appointment.end_time?.split(":")[0] as string) <=
+                    parseInt(day?.end_time?.split(":")[0] as string)
+                ) {
+                  return (
+                    <div
+                      key={appointment.id}
+                      className={styles.appointment}
+                      style={{
+                        top: `${getStartPosition(appointment.start_time)}px`,
+                        height: getTimeSlotHeight(appointment),
+                      }}
+                      onClick={() => handleModalOpen(appointment.id)}
+                    >
+                      <div className={styles.appointmentInfoCon}>
+                        <span className={styles.appointmentName}>
+                          {appointment.first_name} {appointment.last_name}:
+                          &nbsp;
+                        </span>
+                        <span className={styles.appointmentType}>
+                          {appointment.type}
+                        </span>
+                      </div>
+                      <div>
+                        {appointment.start_time} - {appointment.end_time}
+                      </div>
+                    </div>
+                  );
+                } else {
+                  return null;
+                }
+              })}
               {numbers.map((index) => (
-                <div key={index} className={styles.row}></div>
+                <div
+                  key={index}
+                  className={`${styles.row} ${
+                    index <=
+                      parseInt(day?.start_time?.split(":")[0] as string) ||
+                    index - 1 >=
+                      parseInt(day?.end_time?.split(":")[0] as string)
+                      ? styles.grey
+                      : null
+                  }`}
+                ></div>
               ))}
             </div>
           );

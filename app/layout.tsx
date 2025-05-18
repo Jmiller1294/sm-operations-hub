@@ -2,6 +2,7 @@ import { Metadata } from "next";
 import { Poppins } from "next/font/google";
 import LayoutWrapper from "./layoutWrapper"; // Client wrapper
 import "./styles/globals.css";
+import { ModalProvider } from "./store/modal-context";
 
 export const metadata: Metadata = {
   title: "Shine Masters Operations Hub",
@@ -21,7 +22,9 @@ export default function RootLayout({
   return (
     <html className={`${poppins.variable}`}>
       <body>
-        <LayoutWrapper>{children}</LayoutWrapper>
+        <ModalProvider>
+          <LayoutWrapper>{children}</LayoutWrapper>
+        </ModalProvider>
       </body>
     </html>
   );

@@ -2,19 +2,8 @@
 import React, { useMemo, useState } from "react";
 import styles from "../../styles/Forms.module.css";
 
-const AvailabilityForm = ({ onClose, onClick }) => {
-  const days = useMemo(
-    () => [
-      "Monday",
-      "Tuesday",
-      "Wednesday",
-      "Thursday",
-      "Friday",
-      "Saturday",
-      "Sunday",
-    ],
-    []
-  );
+const AvailabilityForm = ({ onClose }) => {
+
 
   const times = useMemo(
     () => [
@@ -50,28 +39,27 @@ const AvailabilityForm = ({ onClose, onClick }) => {
   const [hours, setHours] = useState(
     days.map((day) => ({
       day,
-      active: days.includes(day),
+      active,
       from: "09:00 AM",
       to: "5:30 PM",
     }))
   );
 
   const handleOnSave = () => {
-    console.log(hours);
-    //onClick("Save");
+    onClose();
   };
 
   const handleOnClose = () => {
-    //onClose("Save");
+    onClose();
   };
 
-  const handleTimeChange = (index, field, value) => {
+  const handleTimeChange = (index:number, field:any, value: any) => {
     const newHours = [...hours];
     newHours[index][field] = value;
     setHours(newHours);
   };
 
-  const toggleDay = (index) => {
+  const toggleDay = (index: number) => {
     const newHours = [...hours];
     newHours[index].active = !newHours[index].active;
     setHours(newHours);
@@ -130,12 +118,15 @@ const AvailabilityForm = ({ onClose, onClick }) => {
                 {item.active ? (
                   <div className={styles["time-inputs"]}>
                     <select className={styles.select}>
-                      {}
-                      <option value="angular">{item.from}</option>
+                      {times.map((time) => (
+                        <option value={time}>{time}</option>
+                      ))}
                     </select>
                     <span style={{ marginTop: "4px" }}>to</span>
                     <select className={styles.select}>
-                      <option value="angular">{item.to}</option>
+                      {times.map((time) => (
+                        <option value={time}>{time}</option>
+                      ))}
                     </select>
                   </div>
                 ) : (

@@ -9,9 +9,9 @@ import React, {
 import styles from "../../../styles/Calendar.module.css";
 import { format, getDaysInMonth } from "date-fns";
 import { Appointment } from "@/app/types/types";
-import { Context } from "@/app/context/appointmentsContext";
 import { startOfMonth } from "date-fns/fp";
 import { useSearchParams } from "next/navigation";
+import AppointmentsContext from "@/app/store/appointments-context";
 
 const MonthPage = () => {
   const tableColumns = useMemo(
@@ -22,11 +22,11 @@ const MonthPage = () => {
   const totalDays = getDaysInMonth(date);
   const daysArray = Array.from({ length: totalDays }, (_, i) => i + 1);
   const [calendarGrid, setCalendarGrid] = useState<any[][]>([]);
-  const { state, getAppointments } = useContext(Context);
   const searchParams = useSearchParams();
+    const { appointments, availability, employees } =
+      useContext(AppointmentsContext);
 
   useEffect(() => {
-    getAppointments();
     createCalendarGrid();
   }, [searchParams]);
 
@@ -69,7 +69,7 @@ const MonthPage = () => {
   );
 
   const filteredAppointments = useMemo(() => {
-    return state.appointments.filter((app: Appointment) => {
+    return appointments.filter((app: Appointment) => {
       const today = format(date, "MMMM, yyyy");
       const formattedDate = format(app.date, "MMMM, yyyy");
       if (searchParams.get("date")) {
@@ -77,7 +77,7 @@ const MonthPage = () => {
       }
       return today === formattedDate;
     });
-  }, [state.appointments, searchParams]);
+  }, [appointments, searchParams]);
 
   return (
     <div className={styles.tableContainer}>
@@ -110,7 +110,7 @@ const MonthPage = () => {
                                 onClick={() => console.log("clicked")}
                               >
                                 <div className={styles.circle}></div>
-                                {app.startTime}
+                                {app.start_time}
                                 {app.type}
                               </div>
                             );

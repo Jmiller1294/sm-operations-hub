@@ -7,11 +7,9 @@ import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 
 const SubMenu = ({ title, Icon, subPaths, path, isExpanded }) => {
   const [isActive, setIsActive] = useState(false);
-  const [isCLicked, setisClciked] = useState(false);
   const pathname = usePathname();
 
   useEffect(() => {
-    console.log(pathname)
     if (!isExpanded) {
       setIsActive(false);
     }

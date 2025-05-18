@@ -18,8 +18,8 @@ import {
   startOfWeek,
 } from "date-fns";
 import { Appointment } from "@/app/types/types";
-import { Context } from "@/app/context/appointmentsContext";
 import { useSearchParams } from "next/navigation";
+import AppointmentsContext from "@/app/store/appointments-context";
 
 const WeekPage = () => {
   const date = useMemo(() => new Date(), []);
@@ -27,11 +27,11 @@ const WeekPage = () => {
   const [dotHeight, setDotHeight] = useState(0);
   const numbers = Array.from(Array(25).keys());
   const elementRef = useRef<any>();
-  const { state, getAppointments } = useContext(Context);
   const searchParams = useSearchParams();
+   const { appointments, availability, employees } =
+     useContext(AppointmentsContext);
 
   useEffect(() => {
-    getAppointments();
     scrollToTime();
   }, []);
 
@@ -67,10 +67,10 @@ const WeekPage = () => {
   };
 
   const getTimeSlotHeight = (appointment: Appointment) => {
-    const { duration, startDateTime, endDateTime } = appointment;
-    if (getHours(endDateTime) < getHours(startDateTime)) {
+    const { duration, start_date_time, end_date_time} = appointment;
+    if (getHours(end_date_time) < getHours(start_date_time)) {
       return (
-        duration - (getHours(endDateTime) * 60 + getMinutes(endDateTime)) - 5
+        duration - (getHours(end_date_time) * 60 + getMinutes(end_date_time)) - 5
       );
     }
     return duration - 5;
@@ -91,12 +91,12 @@ const WeekPage = () => {
 
   const filteredAppointments = useMemo(() => {
     return getDaysOfWeek()?.reduce((acc: any, day: Date) => {
-      acc[format(day, "MMMM dd, yyyy")] = state.appointments?.filter(
+      acc[format(day, "MMMM dd, yyyy")] = appointments?.filter(
         (app: Appointment) => app.date === format(day, "MMMM dd, yyyy")
       );
       return acc;
     }, {} as Record<string, Appointment[]>);
-  }, [getDaysOfWeek, state.appointments]);
+  }, [getDaysOfWeek, appointments]);
 
   return (
     <div className={styles.calendarContainer}>
@@ -141,16 +141,16 @@ const WeekPage = () => {
                     key={idx}
                     className={styles.appointment}
                     style={{
-                      top: `${getStartPosition(appointment.startTime)}px`,
+                      top: `${getStartPosition(appointment.start_time)}px`,
                       height: getTimeSlotHeight(appointment),
                     }}
                     onClick={() => console.log("clicked")}
                   >
                     <div className={styles.appointmentInfoCon}>
-                      {appointment.firstName} {appointment.lastName}
+                      {appointment.first_name} {appointment.last_name}
                     </div>
                     <div>
-                      {appointment.startTime} - {appointment.endTime}
+                      {appointment.start_time} - {appointment.end_time}
                     </div>
                   </div>
                 );

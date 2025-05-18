@@ -1,15 +1,37 @@
-import React from "react";
+import React, { Suspense } from "react";
 import Header from "./components/Header";
+import { getAvailability } from "../lib/availibility";
+import { getAppointments } from "../lib/appointments";
+import { getEmployees } from "../lib/employees";
+import { AppointmentsProvider } from "../store/appointments-context";
+import { Appointment } from "../types/types";
 import { LayoutProps } from "@/.next/types/app/layout";
-import Modal from "../components/Modal";
+import styles from "../styles/loading.module.css";
 
-const AppointmentsPageLayout = ({ children }: LayoutProps) => {
+const AppointmentsPageLayout = async ({ children }: LayoutProps) => {
+  const [availibility, appointments, employees] = await Promise.all([
+    getAvailability(),
+    getAppointments(),
+    getEmployees(),
+  ]);
+
   return (
-    <>
-      <Header />
-      {children}
-      <Modal />
-    </>
+    <AppointmentsProvider
+      appointments={appointments}
+      availability={availibility}
+      employees={employees}
+    >
+      <Suspense
+        fallback={
+          <div className={styles.container}>
+            <div className={styles.spinner}></div>
+          </div>
+        }
+      >
+        <Header />
+        {children}
+      </Suspense>
+    </AppointmentsProvider>
   );
 };
 

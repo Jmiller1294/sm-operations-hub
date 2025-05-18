@@ -75,6 +75,9 @@
   border-top: 1px solid #c4c4c4;
   border-left: 1px solid #ccc;
 }
+.grey{
+  background: lightgrey;
+}
 
 .appointmentName{
   font-weight: bold;
