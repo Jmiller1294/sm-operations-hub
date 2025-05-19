@@ -39,7 +39,7 @@ export type Appointment = {
 export type Availability = {
   id: number,
   day: string,
-  active: boolean,
+  active: number,
   start_time: string,
   end_time: string
 }

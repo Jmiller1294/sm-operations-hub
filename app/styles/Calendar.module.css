@@ -52,6 +52,12 @@
   cursor: pointer;
 }
 
+.column{
+  display: flex;
+  flex-direction: row; 
+  flex: 10;
+}
+
 .col{
   position: relative;
   display: flex;
