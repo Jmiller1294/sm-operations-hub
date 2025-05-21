@@ -32,6 +32,8 @@ import Link from "next/link";
 import CalendarHeader from "../calendar/components/CalendarHeader";
 import AvailabilityForm from "@/app/components/forms/AvailabilityForm";
 import { useModal } from "@/app/store/modal-context";
+import AppointmentsContext from "@/app/store/appointments-context";
+import { refreshAvailability } from "@/app/actions/refreshAvailability";
 
 const Header = () => {
   const router = useRouter();
@@ -44,6 +46,8 @@ const Header = () => {
   const calendarTypeRef = useRef<HTMLDivElement>(null);
   const settingsRef = useRef<HTMLDivElement>(null);
   const { openModal, closeModal } = useModal();
+  const { availability, setAvailability } =
+      useContext(AppointmentsContext);
 
   useEffect(() => {
     setMounted(true);
@@ -119,8 +123,18 @@ const Header = () => {
       openModal(<NewAppointmentForm onClose={closeModal} />);
     }
     if (viewType === "availability") {
-      openModal(<AvailabilityForm onClose={closeModal} />);
+      // Check if availability is empty 
+      if (availability.length === 0) {
+        openModal(<AvailabilityForm onClose={closeModal} availability={[]} refreshAvailability={handleUpdate} />);
+        return;
+      }
+      openModal(<AvailabilityForm onClose={closeModal} availability={availability} refreshAvailability={handleUpdate}/>);
     }
+  };
+
+  const handleUpdate = async () => {
+    const newData = await refreshAvailability(); // Server action
+    setAvailability(newData); // Update the context
   };
 
   const handleCalendarTypeClick = () => {

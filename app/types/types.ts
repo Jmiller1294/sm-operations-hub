@@ -36,6 +36,13 @@ export type Appointment = {
   timezone: string;
 };
 
+export type Day = {
+  day: string;
+  start_time: string;
+  end_time: string;
+  active: number;
+}
+
 export type Availability = {
   id: number,
   day: string,

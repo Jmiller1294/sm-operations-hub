@@ -15,12 +15,6 @@ const SubMenu = ({ title, Icon, subPaths, path, isExpanded }) => {
     }
   }, [isExpanded]);
 
-  useEffect(() => {
-    console.log(pathname, path);
-
-    
-  }, [pathname]);
-
   const handleClick = () => {
     setIsActive(!isActive);
   };

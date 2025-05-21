@@ -48,6 +48,11 @@ const DayViewCalendar:FC = () => {
     return () => clearInterval(id);
   }, []);
 
+  useEffect(() => {
+    console.log(availability)
+  }, [availability]);
+  
+
    const currentHourRef = useRef<HTMLDivElement>(null);
   useLayoutEffect(() => {
     requestAnimationFrame(() =>

@@ -4,7 +4,7 @@ import { getAvailability } from "../lib/availibility";
 import { getAppointments } from "../lib/appointments";
 import { getEmployees } from "../lib/employees";
 import { AppointmentsProvider } from "../store/appointments-context";
-import { Appointment } from "../types/types";
+import { Appointment, Availability, Employee } from "../types/types";
 import { LayoutProps } from "@/.next/types/app/layout";
 import styles from "../styles/loading.module.css";
 
@@ -17,9 +17,9 @@ const AppointmentsPageLayout = async ({ children }: LayoutProps) => {
 
   return (
     <AppointmentsProvider
-      appointments={appointments}
-      availability={availibility}
-      employees={employees}
+      appointments={appointments as Appointment[]}
+      availability={availibility as Availability[]}
+      employees={employees as Employee[]}
     >
       <Suspense
         fallback={

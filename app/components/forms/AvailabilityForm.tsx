@@ -1,10 +1,12 @@
 "use client";
-import React, { useMemo, useState } from "react";
+import React, { useContext, useEffect, useMemo, useState } from "react";
 import styles from "../../styles/Forms.module.css";
+import { Day } from "@/app/types/types";
+import { format, parse } from "date-fns";
+import { saveAvailability } from "@/app/actions/saveAvailability";
+import { useRouter } from 'next/navigation';
 
-const AvailabilityForm = ({ onClose }) => {
-
-
+const AvailabilityForm = ({ onClose, availability, refreshAvailability }) => {
   const times = useMemo(
     () => [
       "9:00 AM",
@@ -16,8 +18,10 @@ const AvailabilityForm = ({ onClose }) => {
       "3:00 PM",
       "4:00 PM",
       "5:00 PM",
+      "5:30 PM",
       "6:00 PM",
       "7:00 PM",
+      "7:30 PM",
       "8:00 PM",
       "9:00 PM",
       "10:00 PM",
@@ -34,18 +38,27 @@ const AvailabilityForm = ({ onClose }) => {
     ],
     []
   );
-
+  const router = useRouter();
   const [enabled, setEnabled] = useState(true);
   const [hours, setHours] = useState(
-    days.map((day) => ({
-      day,
-      active,
-      from: "09:00 AM",
-      to: "5:30 PM",
+    availability.map((d:Day) => ({
+      day: d.day,
+      active: d.active,
+      start_time: d.start_time ? format(parse(d.start_time, 'H:mm', new Date()), 'h:mm a') : "",
+      end_time: d.end_time ? format(parse(d.end_time, 'H:mm', new Date()), 'h:mm a') : "",
     }))
   );
 
-  const handleOnSave = () => {
+
+  const handleOnSave = async () => {
+    const updatedHours = hours.map((day:Day) => ({
+      ...day,
+      start_time: day.start_time ? format(parse(day.start_time, 'hh:mm a', new Date()), 'HH:mm') : "",
+      end_time: day.end_time ? format(parse(day.end_time, 'hh:mm a', new Date()), 'HH:mm') : "",
+    }));
+    await saveAvailability(updatedHours);
+    refreshAvailability();
+    router.refresh();
     onClose();
   };
 
@@ -57,11 +70,12 @@ const AvailabilityForm = ({ onClose }) => {
     const newHours = [...hours];
     newHours[index][field] = value;
     setHours(newHours);
+    
   };
 
   const toggleDay = (index: number) => {
     const newHours = [...hours];
-    newHours[index].active = !newHours[index].active;
+    newHours[index].active = newHours[index].active === 1 ? 0 : 1;
     setHours(newHours);
   };
 
@@ -103,29 +117,39 @@ const AvailabilityForm = ({ onClose }) => {
           </label>
         </div>
         {enabled &&
-          hours.map((item, index) => {
+          hours.map((day:Day, index:number) => {
             return (
-              <div key={item.day} className={styles["business-day"]}>
+              <div key={day.day} className={styles["business-day"]}>
                 <label className={styles.switch}>
                   <input
                     type="checkbox"
-                    checked={item.active}
+                    checked={day.active === 1 ? true : false} 
                     onChange={() => toggleDay(index)}
                   />
                   <span className={`${styles.slider} ${styles.round}`}></span>
                 </label>
-                <span className="day-label">{item.day}</span>
-                {item.active ? (
+                <span className="day-label">{day.day}</span>
+                {day.active ? (
                   <div className={styles["time-inputs"]}>
-                    <select className={styles.select}>
+                    <select className={styles.select} onChange={(e) => handleTimeChange(index, "start_time", e.target.value)}
+                      value={day.start_time}>
                       {times.map((time) => (
-                        <option value={time}>{time}</option>
+                        <option 
+                          key={time} 
+                          value={time}
+                        >{time}</option>
                       ))}
                     </select>
                     <span style={{ marginTop: "4px" }}>to</span>
-                    <select className={styles.select}>
+                    <select className={styles.select} 
+                      onChange={(e) => handleTimeChange(index, "end_time", e.target.value)}
+                      value={day.end_time}
+                    >
                       {times.map((time) => (
-                        <option value={time}>{time}</option>
+                        <option 
+                          key={time} 
+                          value={time}
+                        >{time}</option>
                       ))}
                     </select>
                   </div>

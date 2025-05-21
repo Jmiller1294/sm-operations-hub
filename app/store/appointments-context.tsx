@@ -1,11 +1,13 @@
 "use client"
 import { createContext, ReactNode, useState } from 'react';
-import { Appointment, Availability, Employee,  } from "@/app/types/types";
+import { Appointment, Availability, Employee } from "@/app/types/types";
+
 
 type ContextType = {
-  appointments: Appointment[],
-  employees: Employee[],
-  availability: Availability[]
+  appointments: Appointment[];
+  employees: Employee[];
+  availability: Availability[];
+  setAvailability: (data: Availability[]) => void;
 };
 
 type AppointmentsProviderProps = {
@@ -18,7 +20,8 @@ type AppointmentsProviderProps = {
 const AppointmentsContext = createContext<ContextType>({
   appointments: [],
   employees: [],
-  availability: []
+  availability: [],
+  setAvailability: () => {},
 } as ContextType);
 
 export function AppointmentsProvider({
@@ -30,12 +33,14 @@ export function AppointmentsProvider({
   const [appointmentsState, setAppointments] =
     useState<Appointment[]>(appointments);
   const [employeesState, setEmployees] = useState<Employee[]>(employees);
-  const [availabilityState, setAvailability] = useState<any[]>(availability);
+  const [availabilityState, setAvailabilityState] = useState<any[]>(availability);
 
+ 
   const contextValue: ContextType = {
     appointments: appointmentsState,
     employees: employeesState,
     availability: availabilityState,
+    setAvailability: setAvailabilityState,
   };
 
   return (
