@@ -6,6 +6,8 @@ import {
   useContext,
   useMemo,
   useCallback,
+  FC,
+  useLayoutEffect,
 } from "react";
 import styles from "../../../styles/Calendar.module.css";
 import {
@@ -17,64 +19,65 @@ import {
   parse,
   startOfWeek,
 } from "date-fns";
-import { Appointment } from "@/app/types/types";
+import { Appointment, Availability } from "@/app/types/types";
 import { useSearchParams } from "next/navigation";
 import AppointmentsContext from "@/app/store/appointments-context";
+import { useModal } from "@/app/store/modal-context";
+import AppointmentInfo from "../../components/AppointmentInfo";
 
-const WeekPage = () => {
+
+
+const PIXELS_PER_MIN = 1;        // 60 min = 60 px 
+const LABEL_HEIGHT   = 60;       // first blank hour for padding
+
+//Helper functions
+const makeTimeSlots = () =>
+  Array.from({ length: 24 }, (_, h) => {
+    const hr = h % 12 || 12;
+    return `${hr}:00 ${h >= 12 ? "pm" : "am"}`;
+  });
+
+const minsSinceMidnight = (d: Date) =>
+  getHours(d) * 60 + getMinutes(d) + 180;
+
+const startPixel = (iso: string) =>
+  LABEL_HEIGHT + minsSinceMidnight(new Date(iso)) * PIXELS_PER_MIN;
+
+const slotHeight = (durationMin: number) =>
+  durationMin * PIXELS_PER_MIN;
+
+
+const WeekViewCalendar:FC = () => {
   const date = useMemo(() => new Date(), []);
-  const [lineHeight, setLineHeight] = useState(0);
-  const [dotHeight, setDotHeight] = useState(0);
-  const numbers = Array.from(Array(25).keys());
-  const elementRef = useRef<any>();
+  const { appointments, availability, employees } =
+    useContext(AppointmentsContext);
   const searchParams = useSearchParams();
-   const { appointments, availability, employees } =
-     useContext(AppointmentsContext);
+  const currDateISO = searchParams.get("date") ?? new Date().toISOString();
+  const currDate = new Date(currDateISO);
+  const fullDayName = format(currDate, "EEEE");
+  const dayAvail: Availability | undefined = availability.find(
+    (d) => d.day === fullDayName
+  );
+  const { openModal, closeModal } = useModal();
+  const [now, setNow] = useState(() => new Date());
 
   useEffect(() => {
-    scrollToTime();
+    const id = setInterval(() => setNow(new Date()), 60_000);
+    return () => clearInterval(id);
   }, []);
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setDotHeight((prev) => prev + 1);
-      setLineHeight((prev) => prev + 1);
-    }, 60000);
+    console.log(availability);
+  }, [availability]);
 
-    return () => clearInterval(interval);
+  const currentHourRef = useRef<HTMLDivElement>(null);
+  useLayoutEffect(() => {
+    requestAnimationFrame(() =>
+      currentHourRef.current?.scrollIntoView({ block: "center" })
+    );
   }, []);
 
-  const timeSlots = useMemo(() => {
-    return Array.from({ length: 24 }, (_, hour) => {
-      const formattedHour = hour === 0 ? 12 : hour > 12 ? hour - 12 : hour;
-      const period = hour >= 12 ? "pm" : "am";
-      return `${formattedHour}:00 ${period}`;
-    });
-  }, []);
-
-  const scrollToTime = () => {
-    const currentTime = date;
-    const minutesSinceMidnight =
-      getHours(currentTime) * 60 + 60 + getMinutes(currentTime);
-    setDotHeight(minutesSinceMidnight - 5);
-    setLineHeight(minutesSinceMidnight);
-    elementRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
-  };
-
-  const getStartPosition = (time: string) => {
-    const parsedTime = parse(time, "hh:mm a", date);
-    return getHours(parsedTime) * 60 + 60 + getMinutes(parsedTime);
-  };
-
-  const getTimeSlotHeight = (appointment: Appointment) => {
-    const { duration, start_date_time, end_date_time} = appointment;
-    if (getHours(end_date_time) < getHours(start_date_time)) {
-      return (
-        duration - (getHours(end_date_time) * 60 + getMinutes(end_date_time)) - 5
-      );
-    }
-    return duration - 5;
-  };
+  const timeSlots = useMemo(makeTimeSlots, []);
 
   const getDaysOfWeek = useCallback(() => {
     let currDate: Date | string = date;
@@ -100,64 +103,104 @@ const WeekPage = () => {
 
   return (
     <div className={styles.calendarContainer}>
-      <div
-        className={styles.timeLine}
-        style={{
-          top: `${lineHeight}px`,
-        }}
-      ></div>
+      {/* moving “now” indicators */}
       <div
         className={styles.timeDot}
-        style={{
-          top: `${dotHeight}px`,
-        }}
-      ></div>
+        style={{ top: LABEL_HEIGHT + minsSinceMidnight(now) - 5 }}
+      />
+      <div
+        className={styles.timeLine}
+        style={{ top: LABEL_HEIGHT + minsSinceMidnight(now) }}
+      />
+
+      {/* left time column */}
       <div className={styles.timeColumn}>
-        {timeSlots.map((time: string, index: number) => {
-          if (index === parseInt(format(new Date(), "H"))) {
-            return (
-              <div ref={elementRef} key={index} className={styles.timeSlot}>
-                {time}
-              </div>
-            );
-          } else {
-            return (
-              <div key={index} className={styles.timeSlot}>
-                {time}
-              </div>
-            );
-          }
-        })}
+        {timeSlots.map((label, hr) => (
+          <div
+            key={hr}
+            ref={hr === getHours(currDate) ? currentHourRef : undefined}
+            className={styles.timeSlot}
+          >
+            {label}
+          </div>
+        ))}
       </div>
-      <div style={{ display: "flex", flexDirection: "row", flex: 10 }}>
-        {getDaysOfWeek().map((day: Date, index: number) => {
-          const appointments =
-            filteredAppointments?.[format(day, "MMMM dd, yyyy")] || [];
+
+      {/* per-employee columns */}
+      <div className={styles.column}>
+        {getDaysOfWeek().map((day) => {
+          const empApps = filteredAppointments?.[format(day, "MMMM dd, yyyy")] || [];
+          const fullDayName = format(day, "EEEE");
+          const dayAvail = availability.find(
+            (d) => d.day === fullDayName
+          );
+          if (!dayAvail) return null;
+          const startHr = parse(dayAvail.start_time, "H:mm", currDate).getHours();
+          const endHr = parse(dayAvail.end_time, "H:mm", currDate).getHours();
+          if (!dayAvail.active || startHr >= endHr) return null;
           return (
-            <div className={styles["small-col"]} key={index}>
-              {appointments?.map((appointment: Appointment, idx: number) => {
+            <div key={day.getTime()} className={styles.col}>
+              {/* appointments */}
+              {empApps.map((app: Appointment) => {
+                const top = startPixel(app.datetime);
+                const height = slotHeight(app.duration);
+                const appStartHr = getHours(app.datetime);
+
+                // skip if outside working window
+                if (
+                  appStartHr <
+                    parse(dayAvail.start_time, "H:mm", currDate).getHours() ||
+                  appStartHr + app.duration / 60 >
+                    parse(dayAvail.end_time, "H:mm", currDate).getHours()
+                )
+                  return null;
+
                 return (
-                  <div
-                    key={idx}
+                  <button
+                    key={app.id}
+                    style={{ top, height }}
                     className={styles.appointment}
-                    style={{
-                      top: `${getStartPosition(appointment.start_time)}px`,
-                      height: getTimeSlotHeight(appointment),
-                    }}
-                    onClick={() => console.log("clicked")}
+                    onClick={() =>
+                      openModal(
+                        <AppointmentInfo data={app} onClose={closeModal} />
+                      )
+                    }
                   >
-                    <div className={styles.appointmentInfoCon}>
-                      {appointment.first_name} {appointment.last_name}
-                    </div>
+                    <span className={styles.appointmentName}>
+                      {app.first_name} {app.last_name}:&nbsp;
+                    </span>
+                    <span className={styles.appointmentType}>{app.type}</span>
                     <div>
-                      {appointment.start_time} - {appointment.end_time}
+                      {app.start_time} – {app.end_time}
                     </div>
-                  </div>
+                  </button>
                 );
               })}
-              {numbers.map((index) => (
-                <div key={index} className={styles.row}></div>
-              ))}
+
+              {/* background grid rows */}
+              {Array.from({ length: 25 }).map((_, i) => {
+                if (dayAvail.active === 1) {
+                  return (
+                    <div
+                      key={i}
+                      className={`${styles.row} ${
+                        i <=
+                          parse(
+                            dayAvail.start_time,
+                            "H:mm",
+                            currDate
+                          ).getHours() ||
+                        i - 1 >=
+                          parse(dayAvail.end_time, "H:mm", currDate).getHours()
+                          ? styles.grey
+                          : ""
+                      }`}
+                    />
+                  );
+                } else {
+                  return <div key={i} className={styles.row} />;
+                }
+              })}
             </div>
           );
         })}
@@ -166,4 +209,5 @@ const WeekPage = () => {
   );
 };
 
-export default WeekPage;
+
+export default WeekViewCalendar;
