@@ -21,7 +21,7 @@ const NewAppointmentForm = ({ onClose }: NewAppointmentFormProps) => {
     () => [
       {
         title: "Appointment Type",
-        content: (
+        children: (
           <div className={styles.selectCon}>
             <select
               className={styles["input-select"]}
@@ -36,10 +36,10 @@ const NewAppointmentForm = ({ onClose }: NewAppointmentFormProps) => {
       },
       {
         title: "Date & Time",
-        content: <DatetimePicker onClick={handleOnClick} />,
+        children: <DatetimePicker onClick={handleOnClick} />,
       },
-      { title: "Client Info", content: <ClientInfoForm /> },
-      { title: "Appointment Details", content: <ClientDetailsForm /> },
+      { title: "Client Info", children: <ClientInfoForm /> },
+      { title: "Appointment Details", children: <ClientDetailsForm /> },
     ],
     []
   );
@@ -55,14 +55,15 @@ const NewAppointmentForm = ({ onClose }: NewAppointmentFormProps) => {
         </button>
       </div>
       <div>
-        {accordionData.map(({ title, content }, index: number) => (
+        {accordionData.map(({ title, children }, index: number) => (
           <Accordion
             key={index}
             title={title}
-            content={content}
             id={index}
             step={step}
-          />
+          >
+            {children}
+          </Accordion>
         ))}
       </div>
     </div>

@@ -13,7 +13,7 @@
   position: fixed;
   top: 0;
   right: -1810px; /* Initially hidden off-screen */
-  width: 45%;
+  width: 55%;
   height: 100vh;
   background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
   transition: right 0.3s ease-in-out; /* Smooth transition for opening/closing */

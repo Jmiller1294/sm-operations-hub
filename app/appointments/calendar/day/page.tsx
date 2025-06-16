@@ -49,11 +49,10 @@ const DayViewCalendar:FC = () => {
   }, []);
 
   useEffect(() => {
-    console.log(availability)
-  }, [availability]);
+    window.scrollTo(0, 50 * minsSinceMidnight(now));
+  }, [searchParams]);
   
-
-   const currentHourRef = useRef<HTMLDivElement>(null);
+  const currentHourRef = useRef<HTMLDivElement>(null);
   useLayoutEffect(() => {
     requestAnimationFrame(() =>
       currentHourRef.current?.scrollIntoView({ block: "center" }),

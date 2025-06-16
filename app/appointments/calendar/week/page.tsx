@@ -67,8 +67,8 @@ const WeekViewCalendar:FC = () => {
   }, []);
 
   useEffect(() => {
-    console.log(availability);
-  }, [availability]);
+    window.scrollTo(0, 50 * minsSinceMidnight(now));
+  }, [searchParams]);
 
   const currentHourRef = useRef<HTMLDivElement>(null);
   useLayoutEffect(() => {
@@ -76,6 +76,8 @@ const WeekViewCalendar:FC = () => {
       currentHourRef.current?.scrollIntoView({ block: "center" })
     );
   }, []);
+
+
 
   const timeSlots = useMemo(makeTimeSlots, []);
 

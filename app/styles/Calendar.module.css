@@ -165,7 +165,7 @@
   display: flex;
   justify-content: flex-start;
   width: 100%;
-  height: 'auto';
+  height: 100vh;
   padding: 160px 35px 35px 35px;
   box-sizing: border-box;
 }
