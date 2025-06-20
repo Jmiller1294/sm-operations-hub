@@ -14,7 +14,7 @@ const navList = [
   {
     icon: FaHome,
     title: "Home",
-    path: "/",
+    path: "/home",
     subPaths: [],
   },
   {
@@ -34,8 +34,8 @@ const navList = [
   },
   {
     icon: FaFolder,
-    title: "Scheduling",
-    path: "/scheduling",
+    title: "Clients",
+    path: "/clients",
     subPaths: [],
   },
   {

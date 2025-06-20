@@ -1,8 +1,9 @@
 import React from "react";
 import DashboardPage from "./dashboard/page";
+import HomePage from "./home/page";
 
-const HomePage = () => {
-  return <DashboardPage />;
+const LandingPage = () => {
+  return <HomePage />;
 };
 
-export default HomePage;
+export default LandingPage;
