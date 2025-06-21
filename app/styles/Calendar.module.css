@@ -18,9 +18,10 @@
 .calendarContainer {
   display: flex;
   width: 100%;
-  height: auto;
+  height: 90vh;
+  overflow-y: scroll;
   position: relative;
-  padding-top: 180px;
+  padding-top: 118px;
 }
 
 .timeColumn {

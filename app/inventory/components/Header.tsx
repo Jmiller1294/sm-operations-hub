@@ -3,7 +3,7 @@ import { CiDollar } from "react-icons/ci";
 
 const InventoryHeader = () => {
   return (
-    <div className="flex flex-row items-center w-auto h-28 mt-20 ml-6">
+    <div className="flex flex-row items-center w-auto h-28 mt-10 ml-6">
       <CiDollar size={34} />
       <div className="flex flex-col ml-4 border-r-2 pr-6">
         <span className="text-lg">Total Assets</span>

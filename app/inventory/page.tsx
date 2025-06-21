@@ -4,7 +4,7 @@ import SearchBar from '../components/searchbar';
 
 const InventoryPage = () => {
   return (
-    <div className="flex flex-col h-fit w-full p-4">
+    <div className="flex flex-col h-full w-full p-4">
       <SearchBar />
     </div>
   );

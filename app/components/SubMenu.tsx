@@ -23,7 +23,7 @@ const SubMenu = ({ title, Icon, subPaths, path, isExpanded }) => {
     <li>
       <div className={`${styles.icon_link} ${pathname.includes(path) ? styles.active : null}`}>
         <Link key={title} className={styles.link} href={path}>
-          <Icon className={styles.link_icon} size={24} />
+          {Icon}
           <span className={styles.link_name}>{title}</span>
         </Link>
         {subPaths.length < 2 ? null : (

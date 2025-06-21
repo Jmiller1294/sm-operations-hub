@@ -1,30 +1,54 @@
 import React from "react";
 import styles from "../styles/Sidebar.module.css";
-import {
-  FaBook,
-  FaCalendar,
-  FaFolder,
-  FaHome,
-  FaServicestack,
-} from "react-icons/fa";
-import { IoSettingsSharp } from "react-icons/io5";
+import { IoSettingsSharp } from "";
 import SubMenu from "./SubMenu";
+import dynamic from "next/dynamic";
+
+const FaHome = dynamic(
+  () => import("react-icons/fa").then((mod) => mod.FaHome),
+  { ssr: false }
+);
+const FaCalendar = dynamic(
+  () => import("react-icons/fa").then((mod) => mod.FaCalendar),
+  { ssr: false }
+);
+
+const FaFolder = dynamic(
+  () => import("react-icons/fa").then((mod) => mod.FaFolder),
+  { ssr: false }
+);
+
+const FaBook = dynamic(
+  () => import("react-icons/fa").then((mod) => mod.FaBook),
+  { ssr: false }
+);
+
+const FaServicestack = dynamic(
+  () => import("react-icons/fa").then((mod) => mod.FaServicestack),
+  { ssr: false }
+);
+
+const IoSettingsSharp = dynamic(
+  () => import("react-icons/io5").then((mod) => mod.IoSettingsSharp),
+  { ssr: false }
+);
+
 
 const navList = [
   {
-    icon: FaHome,
+    icon: <FaHome />,
     title: "Home",
     path: "/home",
     subPaths: [],
   },
   {
-    icon: FaCalendar,
+    icon: <FaCalendar />,
     title: "Appointments",
     path: "/appointments",
     subPaths: [],
   },
   {
-    icon: FaBook,
+    icon: <FaBook />,
     title: "Quotes",
     path: "/quotes",
     subPaths: [
@@ -33,25 +57,25 @@ const navList = [
     ],
   },
   {
-    icon: FaFolder,
+    icon: <FaFolder />,
     title: "Clients",
     path: "/clients",
     subPaths: [],
   },
   {
-    icon: FaServicestack,
+    icon: <FaServicestack />,
     title: "Services",
     path: "/services",
     subPaths: [],
   },
   {
-    icon: FaHome,
+    icon: <FaHome />,
     title: "Inventory",
     path: "/inventory",
     subPaths: [],
   },
   {
-    icon: FaHome,
+    icon: <FaHome />,
     title: "Booking",
     path: "/booking",
     subPaths: [
@@ -60,7 +84,7 @@ const navList = [
     ],
   },
   {
-    icon: IoSettingsSharp,
+    icon: <IoSettingsSharp />,
     title: "Settings",
     path: "/settings",
     subPaths: [],
@@ -85,7 +109,7 @@ const Sidebar = ({ isExpanded }) => {
         {navList.map(({ title, icon: Icon, path, subPaths }) => {
           return (
             <SubMenu
-              key={title}
+              key={path}
               title={title}
               Icon={Icon}
               path={path}

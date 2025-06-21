@@ -1,4 +1,4 @@
-'use server'
+'use server';
 
 import { updateAvailability } from "@/app/lib/appointments";
 

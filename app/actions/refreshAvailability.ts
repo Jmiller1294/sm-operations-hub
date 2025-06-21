@@ -1,4 +1,4 @@
-"use server";
+'use server';
 // This function is a server action that refreshes the availability data
 import { getAvailability } from "@/app/lib/availibility";
 

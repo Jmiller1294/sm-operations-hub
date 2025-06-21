@@ -16,7 +16,7 @@ const tabs = [
 
 const InventoryPageLayout = ({ children }: LayoutProps) => {
   return (
-    <div className="flex flex-col w-full h-fit">
+    <div className="flex flex-col w-full h-[90svh] overflow-y-scroll">
       <InventoryHeader />
       <Tabs tabs={tabs} />
       {children}
