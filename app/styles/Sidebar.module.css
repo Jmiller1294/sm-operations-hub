@@ -1,7 +1,7 @@
 .sidebar{
   height: 100vh; 
   width: 100%; 
-  overflow: auto;
+  overflow: hidden;
 }
 
 .sidebar.close{
@@ -45,7 +45,6 @@
 
 .nav_links{
   display: flex;
-  justify-content: space-evenly;
   flex-direction: column;
   height: 91%;
   overflow: auto;
@@ -97,18 +96,22 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 20px;
-  padding-right: 0;
+  padding-left: 30px;
+  padding-right: 40px;
+  padding-top: 20px;
+  padding-bottom: 20px;
 }
 
 .sidebar.close .icon_link{
   display: block;
   padding-right: 0;
+  padding-top: 20px;
+  padding-bottom: 20px;
 }
 
 .sub_menu{
   padding: 6px 6px 14px 84px;
-  margin-top: -10px;
+
   background: #1D1B31;
   display: none;
 }

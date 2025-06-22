@@ -20,7 +20,7 @@ const SubMenu = ({ title, Icon, subPaths, path, isExpanded }) => {
   };
 
   return (
-    <li>
+    <li className=" h-fit">
       <div className={`${styles.icon_link} ${pathname.includes(path) ? styles.active : null}`}>
         <Link key={title} className={styles.link} href={path}>
           {Icon}

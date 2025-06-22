@@ -1,6 +1,5 @@
 import React from "react";
 import styles from "../styles/Sidebar.module.css";
-import { IoSettingsSharp } from "";
 import SubMenu from "./SubMenu";
 import dynamic from "next/dynamic";
 
@@ -36,19 +35,19 @@ const IoSettingsSharp = dynamic(
 
 const navList = [
   {
-    icon: <FaHome />,
+    icon: <FaHome size={22} />,
     title: "Home",
     path: "/home",
     subPaths: [],
   },
   {
-    icon: <FaCalendar />,
+    icon: <FaCalendar size={22} />,
     title: "Appointments",
     path: "/appointments",
     subPaths: [],
   },
   {
-    icon: <FaBook />,
+    icon: <FaBook size={22} />,
     title: "Quotes",
     path: "/quotes",
     subPaths: [
@@ -57,25 +56,25 @@ const navList = [
     ],
   },
   {
-    icon: <FaFolder />,
+    icon: <FaFolder size={22} />,
     title: "Clients",
     path: "/clients",
     subPaths: [],
   },
   {
-    icon: <FaServicestack />,
+    icon: <FaServicestack size={22} />,
     title: "Services",
     path: "/services",
     subPaths: [],
   },
   {
-    icon: <FaHome />,
+    icon: <FaHome size={22} />,
     title: "Inventory",
     path: "/inventory",
     subPaths: [],
   },
   {
-    icon: <FaHome />,
+    icon: <FaHome size={22} />,
     title: "Booking",
     path: "/booking",
     subPaths: [
@@ -84,7 +83,7 @@ const navList = [
     ],
   },
   {
-    icon: <IoSettingsSharp />,
+    icon: <IoSettingsSharp size={22} />,
     title: "Settings",
     path: "/settings",
     subPaths: [],
