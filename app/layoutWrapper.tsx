@@ -21,7 +21,7 @@ export default function LayoutWrapper({
         <Sidebar isExpanded={isExpanded} />
       </div>
       <main className={`main-container ${isExpanded ? "" : "closed"}`}>
-        <Header onToggle={toggleContainer} />
+        <Header onToggle={toggleContainer} isExpanded={isExpanded} />
         {children}
       </main>
     </div>

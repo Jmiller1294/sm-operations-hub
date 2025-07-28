@@ -1,20 +1,14 @@
 import React from "react";
 import styles from "../styles/Header.module.css";
 import { IoMdMenu } from "react-icons/io";
-import SearchBar from "./searchbar";
+import SearchBar from "./Searchbar";
 
-const Header = ({ onToggle }: any) => {
+const Header = ({ onToggle, isExpanded }: any) => {
   return (
-    <div className="relative w-full h-16">
-      <div className="absolute top-0 right-0 w-full h-fit bg-white shadow-md flex items-center justify-between px-4">
-        <IoMdMenu
-          fontSize={30}
-          onClick={() => onToggle()}
-          className="cursor-pointer "
-        />
-        <div className="w-1/2 h-16 ml-auto">
-          <SearchBar />
-        </div>
+    <div className={`${styles.container}  ${isExpanded ? "" : styles.closed}`}>
+      <IoMdMenu fontSize={30} onClick={() => onToggle()} />
+      <div className="ml-auto mr-auto">
+        <SearchBar />
       </div>
     </div>
   );

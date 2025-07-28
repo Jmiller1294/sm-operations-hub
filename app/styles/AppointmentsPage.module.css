@@ -22,13 +22,12 @@
   width: 100%;
   box-sizing: border-box;
   align-items: center;
-  padding: 0 26px 0 10px;
+  padding: 14px;
 }
 
 .toggleContainer {
   display: inline-block;
   position: relative;
-  padding: 16px;
 }
 
 .toggleInput {
@@ -80,11 +79,10 @@
   height: fit-content;
   width: 9%;
   height: 40px;
-  padding: 10px;
+  padding-left: 6px;
+  padding-right: 6px;
   box-sizing: border-box;
-  margin-top: 5px;
   align-items: center;
-  margin-right: 10px;
 }
 
 .todayButton {
@@ -103,23 +101,6 @@
   background-color: #ddd;
 }
 
-.newAppointmentButton {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  height: 34px;
-  width: 50%;
-  border-radius: 25px;
-  font-size: 1vw;
-  font-weight: 550;
-  border: none;
-  cursor: pointer;
-  padding-left: 8px;
-  padding-right: 8px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
-}
-
 .newAppointmentButton:hover {
   background-color: #ddd;
 }
@@ -131,7 +112,7 @@
   justify-content: space-between;
   margin-left: auto;
   height: 40px;
-  width: 30%;
+  width: 28%;
   font-size: 0.9rem;
   font-weight: 550;
   box-sizing: border-box;
@@ -200,6 +181,7 @@
   font-size: 20px;
   font-weight: normal;
   margin-left: 4px;
+  margin-right: 4px;
 }
 
 .side-modal {

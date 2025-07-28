@@ -28,12 +28,13 @@ import {
 } from "date-fns";
 import styles from "../../styles/AppointmentsPage.module.css";
 import NewAppointmentForm from "@/app/components/forms/NewAppointmentForm";
-import Link from "next/link";
 import CalendarHeader from "../calendar/components/CalendarHeader";
 import AvailabilityForm from "@/app/components/forms/AvailabilityForm";
 import { useModal } from "@/app/store/modal-context";
 import AppointmentsContext from "@/app/store/appointments-context";
 import { refreshAvailability } from "@/app/actions/refreshAvailability";
+import BasicButton from "@/app/components/buttons/BasicButton";
+import DropdownButton from "@/app/components/buttons/DropdownButton";
 
 const Header = () => {
   const router = useRouter();
@@ -43,11 +44,11 @@ const Header = () => {
   const [mounted, setMounted] = useState(false);
   const [CalendarTypeIsClicked, setCalendarTypeIsClicked] = useState(false);
   const [settingsIsClicked, setSettingsIsClicked] = useState(false);
+  const [calendarType, setCalendarType] = useState("Day");
   const calendarTypeRef = useRef<HTMLDivElement>(null);
   const settingsRef = useRef<HTMLDivElement>(null);
   const { openModal, closeModal } = useModal();
-  const { availability, setAvailability } =
-      useContext(AppointmentsContext);
+  const { availability, setAvailability } = useContext(AppointmentsContext);
 
   useEffect(() => {
     setMounted(true);
@@ -123,12 +124,24 @@ const Header = () => {
       openModal(<NewAppointmentForm onClose={closeModal} />);
     }
     if (viewType === "availability") {
-      // Check if availability is empty 
+      // Check if availability is empty
       if (availability.length === 0) {
-        openModal(<AvailabilityForm onClose={closeModal} availability={[]} refreshAvailability={handleUpdate} />);
+        openModal(
+          <AvailabilityForm
+            onClose={closeModal}
+            availability={[]}
+            refreshAvailability={handleUpdate}
+          />
+        );
         return;
       }
-      openModal(<AvailabilityForm onClose={closeModal} availability={availability} refreshAvailability={handleUpdate}/>);
+      openModal(
+        <AvailabilityForm
+          onClose={closeModal}
+          availability={availability}
+          refreshAvailability={handleUpdate}
+        />
+      );
     }
   };
 
@@ -213,13 +226,13 @@ const Header = () => {
             className={styles.calendarArrows}
             onClick={() => changeDate("decrease")}
           >
-            <IoIosArrowBack size={24} />
+            <IoIosArrowBack size={24} className="mr-auto ml-auto" />
           </button>
           <button
             className={styles.calendarArrows}
             onClick={() => changeDate("increase")}
           >
-            <IoIosArrowForward size={24} />
+            <IoIosArrowForward size={24} className="mr-auto ml-auto" />
           </button>
         </div>
         <span className={styles.dateText}>
@@ -235,56 +248,52 @@ const Header = () => {
               : null}
           </span>
         </span>
-        <button className={styles.todayButton} onClick={handleTodayClick}>
+        <BasicButton
+          onClick={() => handleTodayClick()}
+          rounded={true}
+          color={"bg-gray-200"}
+          textColor={"text-black"}
+          fontSize={"text-xs"}
+        >
           Today
-        </button>
+        </BasicButton>
         <div className={styles.buttonsContainer}>
-          <div className={styles["settings-dropdown"]} ref={settingsRef}>
-            <button
-              className={styles["settings-btn"]}
-              onClick={handleSettingsClick}
-            >
-              <IoSettingsOutline fontSize={24} />
-            </button>
-            <div
-              className={`${styles["dropdown-content"]} ${
-                settingsIsClicked ? styles.active : null
-              }`}
-            >
-              <button
-                className={styles.availabilitybttn}
-                onClick={() => handleModalOpen("availability")}
-              >
-                Availability
-              </button>
-            </div>
-          </div>
-          <div
-            className={styles["calendar-type-dropdown"]}
+          <DropdownButton
+            onClick={() => handleSettingsClick()}
+            rounded={true}
+            color={""}
+            border={"border-none"}
+            textColor={"text-black"}
+            fontSize={"text-xs"}
+            padding={false}
+            active={settingsIsClicked}
+            ref={settingsRef}
+          >
+            <IoSettingsOutline fontSize={30} />
+          </DropdownButton>
+          <DropdownButton
+            onClick={() => handleCalendarTypeClick()}
+            rounded={true}
+            color={"bg-gray-200"}
+            textColor={"text-black"}
+            fontSize={"text-xs"}
+            border={"border-1"}
+            padding={true}
+            active={CalendarTypeIsClicked}
             ref={calendarTypeRef}
           >
-            <button
-              className={styles.dropbtn}
-              onClick={handleCalendarTypeClick}
-            >
-              {getCalendarType()} <IoMdArrowDropdown fontSize={20} />
-            </button>
-            <div
-              className={`${styles["dropdown-content"]} ${
-                CalendarTypeIsClicked ? styles.active : null
-              }`}
-            >
-              <Link href={"/appointments/calendar/day"}>Day</Link>
-              <Link href={"/appointments/calendar/week"}>Week</Link>
-              <Link href={"/appointments/calendar/month"}>Month</Link>
-            </div>
-          </div>
-          <button
-            className={styles.newAppointmentButton}
+            {calendarType}
+            <IoMdArrowDropdown fontSize={16} />
+          </DropdownButton>
+          <BasicButton
             onClick={() => handleModalOpen("new appointment")}
+            rounded={false}
+            color={"bg-blue-900"}
+            textColor={"text-white"}
+            fontSize={"text-xs"}
           >
             + New Appointment
-          </button>
+          </BasicButton>
         </div>
       </div>
       <CalendarHeader />

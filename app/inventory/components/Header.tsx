@@ -14,18 +14,18 @@ const InventoryHeader = () => {
           <span className='text-xl font-medium mr-2'>32</span>
           <span>products</span>
         </div>
-        <div className="flex flex-row h-5 w-1/2 gap-2">
+        <div className="flex flex-row h-5 w-3/4 gap-2">
           <div
-            className={`h-3 w-[calc(20%+(100px-10px))] bg-red-600 rounded-xs`}
+            className={`h-3 w-[calc(30%+(100px-10px))] bg-red-600 rounded-xs`}
           ></div>
           <div
-            className={`h-3 w-[calc(20%+(100px-50px))] bg-red-600 rounded-xs`}
+            className={`h-3 w-[calc(30%+(100px-50px))] bg-red-600 rounded-xs`}
           ></div>
           <div
-            className={`h-3 w-[calc(20%+(100px-90px))] bg-red-600 rounded-xs`}
+            className={`h-3 w-[calc(30%+(100px-90px))] bg-red-600 rounded-xs`}
           ></div>
         </div>
-        <div className="flex flex-row h-auto w-1/2 gap-4">
+        <div className="flex flex-row h-auto w-3/4 gap-4">
           <div className="flex flex-row h-fit w-fit items-center gap-2">
             <div className="bg-green-400 h-3 w-3 rounded-full"></div>
             <span>In Stock: 30</span>
